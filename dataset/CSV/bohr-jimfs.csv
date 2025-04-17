@@ -1,0 +1,119 @@
+Class,Atom,Snippet,Line
+com.google.common.jimfs.WindowsPathType,Conditional Operator,((root == null) || (root.length() > 3)) ? 0 : root.length(),83
+com.google.common.jimfs.WindowsPathType,Logic as Control Flow,((root == null) || (root.length() > 3)) ? 0 : root.length(),83
+com.google.common.jimfs.WindowsPathType,Logic as Control Flow,if (directory && (builder.charAt(builder.length() - 1) != '/')) {     builder.append('/'); },191
+com.google.common.jimfs.WindowsPathType,Logic as Control Flow,if ((uriPath.charAt(0) == '\\') && (uriPath.charAt(1) != '\\')) {     uriPath = uriPath.substring(1); },201
+com.google.common.jimfs.UserLookupService,Logic as Control Flow,return (obj instanceof JimfsUserPrincipal) && getName().equals(((JimfsUserPrincipal) (obj)).getName()),97
+com.google.common.jimfs.UserLookupService,Logic as Control Flow,return (obj instanceof JimfsGroupPrincipal) && ((JimfsGroupPrincipal) (obj)).name.equals(name),111
+com.google.common.jimfs.JimfsOutputStream,Post Increment Decrement,file.write(pos++ ((byte) (b))),59
+com.google.common.jimfs.JimfsOutputStream,Type Conversion,(byte) b,59
+com.google.common.jimfs.AbstractWatchService,Logic as Control Flow,return (kind().equals(other.kind()) && (count() == other.count())) && Objects.equals(context() other.context()),174
+com.google.common.jimfs.AbstractWatchService,Logic as Control Flow,(kind().equals(other.kind()) && (count() == other.count())) && Objects.equals(context() other.context()),174
+com.google.common.jimfs.AbstractWatchService,Logic as Control Flow,return watcher.isOpen() && valid.get(),257
+com.google.common.jimfs.AbstractWatchService,Logic as Control Flow,if (isValid() && state.compareAndSet(State.SIGNALLED State.READY)) {     if (!events.isEmpty()) {         signal();     } },278
+com.google.common.jimfs.JimfsFileStore,Conditional Operator,entry == null ? null : ((Directory) (entry.file())),108
+com.google.common.jimfs.Directory,Post Increment Decrement,table[index++],346
+com.google.common.jimfs.Directory,Conditional Operator,entry != null ? entry : endOfData(),349
+com.google.common.jimfs.Directory,Type Conversion,(int) (INITIAL_CAPACITY * 0.75),179
+com.google.common.jimfs.JimfsFileSystems,Logic as Control Flow,if ((!path.isAbsolute()) && (path.getNameCount() == 0)) {     throw new IllegalArgumentException("Invalid root path: " + root); },97
+com.google.common.jimfs.PathService,Infix Operator Precedence,31 * hash + getFileSystem().hashCode(),206
+com.google.common.jimfs.PathService,Infix Operator Precedence,31 * hash + (root == null ? 0 : root.hashCode()),213
+com.google.common.jimfs.PathService,Infix Operator Precedence,31 * hash + name.hashCode(),215
+com.google.common.jimfs.PathService,Infix Operator Precedence,31 * hash + (root == null ? 0 : root.toString().hashCode()),219
+com.google.common.jimfs.PathService,Infix Operator Precedence,31 * hash + name.toString().hashCode(),221
+com.google.common.jimfs.PathService,Conditional Operator,(equalityUsesCanonicalForm) ? CANONICAL_ROOT_ORDERING : DISPLAY_ROOT_ORDERING,89
+com.google.common.jimfs.PathService,Conditional Operator,(equalityUsesCanonicalForm) ? CANONICAL_NAMES_ORDERING : DISPLAY_NAMES_ORDERING,91
+com.google.common.jimfs.PathService,Conditional Operator,(parsed.root() == null) ? null : name(parsed.root()),187
+com.google.common.jimfs.PathService,Conditional Operator,(root == null) ? null : root.toString(),195
+com.google.common.jimfs.PathService,Conditional Operator,(root == null ? 0 : root.hashCode()),213
+com.google.common.jimfs.PathService,Conditional Operator,(root == null ? 0 : root.toString().hashCode()),219
+com.google.common.jimfs.PathService,Conditional Operator,equalityUsesCanonicalForm ? canonicalNormalizations : displayNormalizations,259
+com.google.common.jimfs.PathService,Logic as Control Flow,if ((root == null) && nameList.isEmpty()) {     return emptyPath(); },167
+com.google.common.jimfs.DirectoryEntry,Logic as Control Flow,return (directory.equals(other.directory) && name.equals(other.name)) && Objects.equals(file other.file),147
+com.google.common.jimfs.DirectoryEntry,Logic as Control Flow,(directory.equals(other.directory) && name.equals(other.name)) && Objects.equals(file other.file),147
+com.google.common.jimfs.FileTree,Conditional Operator,dir == null ? null : dir.entryInParent(),69
+com.google.common.jimfs.FileTree,Conditional Operator,(file == null) || (!file.isDirectory()) ? null : ((Directory) (file)),214
+com.google.common.jimfs.FileTree,Logic as Control Flow,if ((!options.contains(LinkOption.NOFOLLOW_LINKS)) && file.isSymbolicLink()) {     return followSymbolicLink(dir ((SymbolicLink) (file)) linkDepth); },169
+com.google.common.jimfs.FileTree,Logic as Control Flow,if (name.equals(Name.SELF) || name.equals(Name.PARENT)) {     Directory dir = toDirectory(entry.file());     assert dir != null;     return dir.entryInParent(); } else {     return entry; },203
+com.google.common.jimfs.FileTree,Logic as Control Flow,(file == null) || (!file.isDirectory()) ? null : ((Directory) (file)),214
+com.google.common.jimfs.FileTree,Logic as Control Flow,return names.isEmpty() || ((names.size() == 1) && names.get(0).toString().isEmpty()),219
+com.google.common.jimfs.FileTree,Logic as Control Flow,names.isEmpty() || ((names.size() == 1) && names.get(0).toString().isEmpty()),219
+com.google.common.jimfs.HeapDisk,Conditional Operator,(config.maxCacheSize == (-1)) ? maxBlockCount : toBlockCount(config.maxCacheSize blockSize),60
+com.google.common.jimfs.Util,Conditional Operator,b == n ? n : b << 1,40
+com.google.common.jimfs.UnixAttributeProvider,Change of Literal Encoding,result |= 0400,138
+com.google.common.jimfs.UnixAttributeProvider,Change of Literal Encoding,result |= 0200,141
+com.google.common.jimfs.UnixAttributeProvider,Change of Literal Encoding,result |= 0100,144
+com.google.common.jimfs.UnixAttributeProvider,Change of Literal Encoding,result |= 040,147
+com.google.common.jimfs.UnixAttributeProvider,Change of Literal Encoding,result |= 020,150
+com.google.common.jimfs.UnixAttributeProvider,Change of Literal Encoding,result |= 010,153
+com.google.common.jimfs.UnixAttributeProvider,Change of Literal Encoding,result |= 04,156
+com.google.common.jimfs.UnixAttributeProvider,Change of Literal Encoding,result |= 02,159
+com.google.common.jimfs.UnixAttributeProvider,Change of Literal Encoding,result |= 01,162
+com.google.common.jimfs.FileSystemState,Logic as Control Flow,do {     for (Closeable resource : resources) {         try {             resource.close();         } catch (Throwable e) {             if (thrown == null) {                 thrown = e;             } else {                 thrown.addSuppressed(e);             }         } finally {             resources.remove(resource);         }     } } while ((registering.get() > 0) || (!resources.isEmpty()) ),125
+com.google.common.jimfs.StandardAttributeProviders,Logic as Control Flow,if ((provider == null) && view.equals("unix")) {     return new UnixAttributeProvider(); },50
+com.google.common.jimfs.RegularFile,Post Increment Decrement,blocks[blockCount++],121
+com.google.common.jimfs.RegularFile,Pre Increment Decrement,((--openCount) == 0),185
+com.google.common.jimfs.RegularFile,Pre Increment Decrement,blocks[++blockIndex],261
+com.google.common.jimfs.RegularFile,Pre Increment Decrement,blocks[++blockIndex],317
+com.google.common.jimfs.RegularFile,Pre Increment Decrement,blocks[++blockIndex],356
+com.google.common.jimfs.RegularFile,Pre Increment Decrement,blockForWrite(++blockIndex),428
+com.google.common.jimfs.RegularFile,Pre Increment Decrement,int index = ++blockIndex,489
+com.google.common.jimfs.RegularFile,Pre Increment Decrement,int index = ++blockIndex,520
+com.google.common.jimfs.RegularFile,Pre Increment Decrement,int index = ++blockIndex,576
+com.google.common.jimfs.RegularFile,Type Conversion,(int) (position / disk.blockSize()),601
+com.google.common.jimfs.Options,Conditional Operator,options.length == 0 ? FOLLOW_LINKS : NOFOLLOW_LINKS,63
+com.google.common.jimfs.Options,Conditional Operator,options.contains(LinkOption.NOFOLLOW_LINKS) ? DEFAULT_READ_NOFOLLOW_LINKS : DEFAULT_READ,83
+com.google.common.jimfs.Options,Conditional Operator,((ImmutableSet<OpenOption>) ((ImmutableSet<?>) (nofollowLinks ? NOFOLLOW_LINKS : FOLLOW_LINKS))),110
+com.google.common.jimfs.Options,Conditional Operator,options.contains(WRITE) ? ImmutableSet.copyOf(options) : ImmutableSet.<OpenOption>builder().add(WRITE).addAll(options).build(),131
+com.google.common.jimfs.Options,Logic as Control Flow,boolean write = append || options.contains(WRITE),73
+com.google.common.jimfs.Options,Logic as Control Flow,boolean read = (!write) || options.contains(READ),74
+com.google.common.jimfs.FileSystemView,Conditional Operator,store.supportsFeature(Feature.SECURE_DIRECTORY_STREAM) ? stream : new DowngradedDirectoryStream(stream),128
+com.google.common.jimfs.FileSystemView,Conditional Operator,(sameFileSystem) ? AttributeCopyOption.ALL : AttributeCopyOption.BASIC,568
+com.google.common.jimfs.FileSystemView,Logic as Control Flow,if ((!entry.name().equals(Name.SELF)) && (!entry.name().equals(Name.PARENT))) {     modifiedTimes.put(entry.name() entry.file().getLastModifiedTime()); },160
+com.google.common.jimfs.FileSystemView,Logic as Control Flow,return (file != null) && Objects.equals(file file2),185
+com.google.common.jimfs.FileSystemView,Logic as Control Flow,if (options.contains(CREATE) || options.contains(CREATE_NEW)) {     return getOrCreateRegularFileWithWriteLock(path options attrs); } else {     throw new NoSuchFileException(path.toString()); },297
+com.google.common.jimfs.FileSystemView,Logic as Control Flow,if (options.contains(TRUNCATE_EXISTING) && options.contains(WRITE)) {     file.writeLock().lock();     try {         file.truncate(0);     } finally {         file.writeLock().unlock();     } },349
+com.google.common.jimfs.FileSystemView,Logic as Control Flow,if ((file == workingDirectory) && (!path.isAbsolute())) {     throw new FileSystemException(path.toString() null "invalid argument"); },482
+com.google.common.jimfs.FileSystemView,Logic as Control Flow,if (move && sourceFile.isDirectory()) {     if (sameFileSystem) {         checkMovable(sourceFile source);         checkNotAncestor(sourceFile destParent destView);     } else {         checkDeletable(sourceFile DeleteMode.ANY source);     } },524
+com.google.common.jimfs.File,Logic as Control Flow,return isDirectory() && equals(((Directory) (this)).parent()),128
+com.google.common.jimfs.JimfsFileSystemProvider,Conditional Operator,checkedPath.getJimfsFileSystem().getFileStore().supportsFeature(FILE_CHANNEL) ? channel : new DowngradedSeekableByteChannel(channel),164
+com.google.common.jimfs.JimfsFileSystemProvider,Logic as Control Flow,return (path.getNameCount() > 0) && path.getFileName().toString().startsWith("."),309
+com.google.common.jimfs.PathType,Logic as Control Flow,return (root != null) && Iterables.isEmpty(names),229
+com.google.common.jimfs.Configuration,Conditional Operator,(builder.attributeProviders == null) ? ImmutableSet.<AttributeProvider>of() : ImmutableSet.copyOf(builder.attributeProviders),257
+com.google.common.jimfs.Configuration,Conditional Operator,(builder.defaultAttributeValues == null) ? ImmutableMap.<String Object>of() : ImmutableMap.copyOf(builder.defaultAttributeValues),261
+com.google.common.jimfs.Configuration,Conditional Operator,(configuration.attributeProviders.isEmpty()) ? null : new HashSet<>(configuration.attributeProviders),368
+com.google.common.jimfs.Configuration,Conditional Operator,(configuration.defaultAttributeValues.isEmpty()) ? null : new HashMap<>(configuration.defaultAttributeValues),372
+com.google.common.jimfs.JimfsPath,Conditional Operator,names.isEmpty() ? null : getName(names.size() - 1),124
+com.google.common.jimfs.JimfsPath,Conditional Operator,Iterables.elementsEqual(newNames names) ? this : pathService.createPath(root newNames),220
+com.google.common.jimfs.JimfsPath,Conditional Operator,(otherNames.size() <= sharedSubsequenceLength) ? ImmutableList.<Name>of() : otherNames.subList(sharedSubsequenceLength otherNames.size()),332
+com.google.common.jimfs.JimfsPath,Conditional Operator,isAbsolute() ? this : getJimfsFileSystem().getWorkingDirectory().resolve(this),348
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,return ((root == null) && (names.size() == 1)) && names.get(0).toString().isEmpty(),91
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,((root == null) && (names.size() == 1)) && names.get(0).toString().isEmpty(),91
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,if (names.isEmpty() || ((names.size() == 1) && (root == null))) {     return null; },129
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,checkArgument((index >= 0) && (index < names.size()) "index (%s) must be >= 0 and < name count (%s)" index names.size()),144
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,((beginIndex >= 0) && (endIndex <= names.size())) && (endIndex > beginIndex),154
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,return (list.size() >= other.size()) && list.subList(0 other.size()).equals(other),164
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,return (((otherPath != null) && getFileSystem().equals(otherPath.getFileSystem())) && Objects.equals(root otherPath.root)) && startsWith(names otherPath.names),170
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,(((otherPath != null) && getFileSystem().equals(otherPath.getFileSystem())) && Objects.equals(root otherPath.root)) && startsWith(names otherPath.names),170
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,(((otherPath != null) && getFileSystem().equals(otherPath.getFileSystem())) && Objects.equals(root otherPath.root)),170
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,if ((lastName != null) && (!lastName.equals(Name.PARENT))) {     newNames.removeLast(); } else if (!isAbsolute()) {     newNames.add(name); },209
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,if ((getNameCount() == 0) || ((getNameCount() == 1) && (!isAbsolute()))) {     return true; },228
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,(getNameCount() == 0) || ((getNameCount() == 1) && (!isAbsolute())),228
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,if (isEmptyPath() || otherPath.isAbsolute()) {     return otherPath; },264
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,return (obj instanceof JimfsPath) && (compareTo(((JimfsPath) (obj))) == 0),421
+com.google.common.jimfs.JimfsPath,Logic as Control Flow,if ((checkNotNull(other) instanceof JimfsPath) && other.getFileSystem().equals(getFileSystem())) {     return ((JimfsPath) (other)); },436
+com.google.common.jimfs.UnixPathType,Conditional Operator,(path.startsWith("/")) ? "/" : null,46
+com.google.common.jimfs.UnixPathType,Logic as Control Flow,if (directory || (builder.length() == 0)) {     builder.append('/'); },74
+com.google.common.jimfs.PollingWatchService,Logic as Control Flow,if ((!(watchable instanceof JimfsPath)) || (!isSameFileSystem(((Path) (watchable))))) {     throw new IllegalArgumentException((("watchable (" + watchable) + ") must be a Path ") + "associated with the same file system as this watch service"); },113
+com.google.common.jimfs.PollingWatchService,Logic as Control Flow,if ((newModifiedTime != null) && (!modifiedTime.equals(newModifiedTime))) {     key.post(new Event<>(ENTRY_MODIFY 1 pathService.createFileName(name)));     changesPosted = true; },240
+com.google.common.jimfs.AttributeService,Logic as Control Flow,if ((attrs.size() > 1) && attrs.contains(ALL_ATTRIBUTES)) {     throw new IllegalArgumentException("invalid attributes: " + attributes); },314
+com.google.common.jimfs.AttributeService,Logic as Control Flow,if ((attrs.size() == 1) && attrs.contains(ALL_ATTRIBUTES)) {     AttributeProvider provider = providersByName.get(view);     readAll(file provider result);     for (String inheritedView : provider.inherits()) {         AttributeProvider inheritedProvider = providersByName.get(inheritedView);         readAll(file inheritedProvider result);     } } else {     for (String attr : attrs) {         result.put(attr getAttribute(file view attr));     } },320
+com.google.common.jimfs.AttributeService,Logic as Control Flow,if (((separatorIndex == 0) || (separatorIndex == (attribute.length() - 1))) || (attribute.indexOf(':' separatorIndex + 1) != (-1))) {     throw new IllegalArgumentException("illegal attribute format: " + attribute); },374
+com.google.common.jimfs.AttributeService,Logic as Control Flow,((separatorIndex == 0) || (separatorIndex == (attribute.length() - 1))) || (attribute.indexOf(':' separatorIndex + 1) != (-1)),374
+com.google.common.jimfs.AttributeService,Logic as Control Flow,if ((attributeNames.size() != 1) || ALL_ATTRIBUTES.equals(attributeNames.get(0))) {     throw new IllegalArgumentException("must specify a single attribute: " + attribute); },395
+com.google.common.jimfs.BasicAttributeProvider,Logic as Control Flow,return ((!file.isDirectory()) && (!file.isRegularFile())) && (!file.isSymbolicLink()),73
+com.google.common.jimfs.BasicAttributeProvider,Logic as Control Flow,((!file.isDirectory()) && (!file.isRegularFile())) && (!file.isSymbolicLink()),73
+com.google.common.jimfs.AttributeProvider,Conditional Operator,(expectedTypes.length == 1) ? expectedTypes[0] : "one of " + Arrays.toString(expectedTypes),168
+com.google.common.jimfs.SystemJimfsFileSystemProvider,Logic as Control Flow,return (isNullOrEmpty(uri.getPath()) && isNullOrEmpty(uri.getQuery())) && isNullOrEmpty(uri.getFragment()),152
+com.google.common.jimfs.SystemJimfsFileSystemProvider,Logic as Control Flow,(isNullOrEmpty(uri.getPath()) && isNullOrEmpty(uri.getQuery())) && isNullOrEmpty(uri.getFragment()),152
+com.google.common.jimfs.JimfsInputStream,Post Increment Decrement,file.read(pos++),62

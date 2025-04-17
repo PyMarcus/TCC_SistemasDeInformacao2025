@@ -1,0 +1,152 @@
+Class,Atom,Snippet,Line
+com.squareup.moshi.JsonAdapter,Logic as Control Flow,if ((!isLenient()) && (reader.peek() != JsonReader.Token.END_DOCUMENT)) {     throw new JsonDataException("JSON document was not fully consumed."); },71
+com.squareup.moshi.JsonUtf8Writer,Infix Operator Precedence,size > 1 || size == 1 && scopes[size - 1] != NONEMPTY_DOCUMENT,350
+com.squareup.moshi.JsonUtf8Writer,Conditional Operator,(!indent.isEmpty()) ? ": " : ":",82
+com.squareup.moshi.JsonUtf8Writer,Conditional Operator,value ? "true" : "false",228
+com.squareup.moshi.JsonUtf8Writer,Logic as Control Flow,if ((!lenient) && (Double.isNaN(value) || Double.isInfinite(value))) {     throw new IllegalArgumentException("Numeric values must be finite but was " + value); },243
+com.squareup.moshi.JsonUtf8Writer,Logic as Control Flow,(!lenient) && (Double.isNaN(value) || Double.isInfinite(value)),243
+com.squareup.moshi.JsonUtf8Writer,Logic as Control Flow,if ((!lenient) && ((string.equals("-Infinity") || string.equals("Infinity")) || string.equals("NaN"))) {     throw new IllegalArgumentException("Numeric values must be finite but was " + value); },277
+com.squareup.moshi.JsonUtf8Writer,Logic as Control Flow,(!lenient) && ((string.equals("-Infinity") || string.equals("Infinity")) || string.equals("NaN")),278
+com.squareup.moshi.JsonUtf8Writer,Logic as Control Flow,((string.equals("-Infinity") || string.equals("Infinity")) || string.equals("NaN")),278
+com.squareup.moshi.Types,Conditional Operator,(type == null) ? "null" : type.getClass().getName(),189
+com.squareup.moshi.Types,Conditional Operator,(pa instanceof ParameterizedTypeImpl) ? ((ParameterizedTypeImpl) (pa)).typeArguments : pa.getActualTypeArguments(),233
+com.squareup.moshi.Types,Conditional Operator,(pb instanceof ParameterizedTypeImpl) ? ((ParameterizedTypeImpl) (pb)).typeArguments : pb.getActualTypeArguments(),237
+com.squareup.moshi.Types,Logic as Control Flow,return (equals(pa.getOwnerType() pb.getOwnerType()) && pa.getRawType().equals(pb.getRawType())) && Arrays.equals(aTypeArguments bTypeArguments),240
+com.squareup.moshi.Types,Logic as Control Flow,(equals(pa.getOwnerType() pb.getOwnerType()) && pa.getRawType().equals(pb.getRawType())) && Arrays.equals(aTypeArguments bTypeArguments),240
+com.squareup.moshi.Types,Logic as Control Flow,return Arrays.equals(wa.getUpperBounds() wb.getUpperBounds()) && Arrays.equals(wa.getLowerBounds() wb.getLowerBounds()),258
+com.squareup.moshi.Types,Logic as Control Flow,return (va.getGenericDeclaration() == vb.getGenericDeclaration()) && va.getName().equals(vb.getName()),265
+com.squareup.moshi.JsonWriter,Post Increment Decrement,scopes[stackSize++],215
+com.squareup.moshi.JsonWriter,Conditional Operator,(!indent.isEmpty()) ? indent : null,231
+com.squareup.moshi.JsonWriter,Conditional Operator,indent != null ? indent : "",240
+com.squareup.moshi.JsonWriter,Conditional Operator,key == null ? "Map keys must be non-null" : "Map keys must be of type String: " + key.getClass().getName(),415
+com.squareup.moshi.JsonValueWriter,Infix Operator Precedence,size > 1 || size == 1 && scopes[size - 1] != NONEMPTY_DOCUMENT,48
+com.squareup.moshi.JsonValueWriter,Infix Operator Precedence,size > 1 || size == 1 && scopes[size - 1] != NONEMPTY_DOCUMENT,284
+com.squareup.moshi.JsonValueWriter,Conditional Operator,(value instanceof BigDecimal) ? ((BigDecimal) (value)) : new BigDecimal(value.toString()),237
+com.squareup.moshi.JsonValueWriter,Logic as Control Flow,if ((!lenient) && ((Double.isNaN(value) || (value == NEGATIVE_INFINITY)) || (value == POSITIVE_INFINITY))) {     throw new IllegalArgumentException("Numeric values must be finite but was " + value); },192
+com.squareup.moshi.Moshi,Post Increment Decrement,factories.add(lastOffset++ factory),217
+com.squareup.moshi.Moshi,Conditional Operator,annotations.isEmpty() && Util.typesMatch(type targetType) ? jsonAdapter : null,261
+com.squareup.moshi.Moshi,Conditional Operator,hit.adapter != null ? hit.adapter : hit,329
+com.squareup.moshi.Moshi,Conditional Operator,adapter != null ? adapter.toString() : super.toString(),419
+com.squareup.moshi.Moshi,Logic as Control Flow,annotations.isEmpty() && Util.typesMatch(type targetType) ? jsonAdapter : null,261
+com.squareup.moshi.Moshi,Logic as Control Flow,if ((Util.typesMatch(type targetType) && (annotations.size() == 1)) && Util.isAnnotationPresent(annotations annotation)) {     return jsonAdapter; },284
+com.squareup.moshi.Moshi,Logic as Control Flow,(Util.typesMatch(type targetType) && (annotations.size() == 1)) && Util.isAnnotationPresent(annotations annotation),284
+com.squareup.moshi.Moshi,Logic as Control Flow,if ((size == 1) && (stack.getFirst().fieldName == null))     return e; ,377
+com.squareup.moshi.JsonValueSource,Conditional Operator,(stackSize > 0) ? STATE_JSON : STATE_END_OF_JSON,163
+com.squareup.moshi.JsonValueSource,Conditional Operator,suffixResult != (-1L) ? suffixResult + prefixResult : prefixResult,209
+com.squareup.moshi.JsonValueReader,Post Increment Decrement,stack[stackSize++],60
+com.squareup.moshi.JsonValueReader,Post Increment Decrement,stack[stackSize++],389
+com.squareup.moshi.JsonValueReader,Post Increment Decrement,array[next++],455
+com.squareup.moshi.JsonValueReader,Conditional Operator,(stackSize != 0) ? stack[stackSize - 1] : null,196
+com.squareup.moshi.JsonValueReader,Conditional Operator,(stackSize != 0) ? stack[stackSize - 1] : null,213
+com.squareup.moshi.JsonValueReader,Conditional Operator,(stackSize != 0) ? stack[stackSize - 1] : null,331
+com.squareup.moshi.JsonValueReader,Conditional Operator,(stackSize != 0) ? stack[stackSize - 1] : null,397
+com.squareup.moshi.JsonValueReader,Logic as Control Flow,if ((peeked.endToken != Token.END_ARRAY) || peeked.hasNext()) {     throw typeMismatch(peeked Token.END_ARRAY); },94
+com.squareup.moshi.JsonValueReader,Logic as Control Flow,if ((peeked.endToken != Token.END_OBJECT) || peeked.hasNext()) {     throw typeMismatch(peeked Token.END_OBJECT); },118
+com.squareup.moshi.JsonValueReader,Logic as Control Flow,return (!(peeked instanceof Iterator)) || ((Iterator) (peeked)).hasNext(),130
+com.squareup.moshi.JsonValueReader,Logic as Control Flow,if ((!lenient) && (Double.isNaN(result) || Double.isInfinite(result))) {     throw new JsonEncodingException((("JSON forbids NaN and infinities: " + result) + " at path ") + getPath()); },262
+com.squareup.moshi.JsonValueReader,Logic as Control Flow,(!lenient) && (Double.isNaN(result) || Double.isInfinite(result)),262
+com.squareup.moshi.JsonValueReader,Logic as Control Flow,if ((parent instanceof Iterator) && ((Iterator<?>) (parent)).hasNext()) {     push(((Iterator<?>) (parent)).next()); },431
+com.squareup.moshi.JsonUtf8Reader,Infix Operator Precedence,value * 10 - (c - '0'),494
+com.squareup.moshi.JsonUtf8Reader,Post Increment Decrement,buffer.getByte(p++),1098
+com.squareup.moshi.JsonUtf8Reader,Conditional Operator,(negative) ? value : -value,512
+com.squareup.moshi.JsonUtf8Reader,Conditional Operator,(p == PEEKED_DOUBLE_QUOTED) ? nextQuotedValue(DOUBLE_QUOTE_OR_SLASH) : nextQuotedValue(SINGLE_QUOTE_OR_SLASH),823
+com.squareup.moshi.JsonUtf8Reader,Conditional Operator,i != (-1) ? buffer.readUtf8(i) : buffer.readUtf8(),891
+com.squareup.moshi.JsonUtf8Reader,Conditional Operator,i != (-1L) ? i : buffer.size(),911
+com.squareup.moshi.JsonUtf8Reader,Conditional Operator,(p == PEEKED_DOUBLE_QUOTED) ? nextQuotedValue(DOUBLE_QUOTE_OR_SLASH) : nextQuotedValue(SINGLE_QUOTE_OR_SLASH),937
+com.squareup.moshi.JsonUtf8Reader,Conditional Operator,index != (-1) ? index + 1 : buffer.size(),1162
+com.squareup.moshi.JsonUtf8Reader,Conditional Operator,found ? index + CLOSING_BLOCK_COMMENT.size() : buffer.size(),1169
+com.squareup.moshi.JsonUtf8Reader,Logic as Control Flow,if (source.request(1) && (buffer.getByte(0) == '>')) {     buffer.readByte(); },312
+com.squareup.moshi.JsonUtf8Reader,Logic as Control Flow,if ((c != keyword.charAt(i)) && (c != keywordUpper.charAt(i))) {     return PEEKED_NONE; },417
+com.squareup.moshi.JsonUtf8Reader,Logic as Control Flow,if (source.request(length + 1) && isLiteral(buffer.getByte(length))) {     return PEEKED_NONE; },422
+com.squareup.moshi.JsonUtf8Reader,Logic as Control Flow,if ((!lenient) && (Double.isNaN(result) || Double.isInfinite(result))) {     throw new JsonEncodingException((("JSON forbids NaN and infinities: " + result) + " at path ") + getPath()); },796
+com.squareup.moshi.JsonUtf8Reader,Logic as Control Flow,(!lenient) && (Double.isNaN(result) || Double.isInfinite(result)),796
+com.squareup.moshi.JsonUtf8Reader,Type Conversion,(char) c,296
+com.squareup.moshi.JsonUtf8Reader,Type Conversion,(int) peekedLong,923
+com.squareup.moshi.JsonUtf8Reader,Type Conversion,(int) asDouble,960
+com.squareup.moshi.internal.Util,Conditional Operator,result != null ? Collections.unmodifiableSet(result) : Util.NO_ANNOTATIONS,115
+com.squareup.moshi.internal.Util,Conditional Operator,c.isArray() ? new GenericArrayTypeImpl(canonicalize(c.getComponentType())) : c,167
+com.squareup.moshi.internal.Util,Conditional Operator,componentType == newComponentType ? original : arrayOf(newComponentType),230
+com.squareup.moshi.internal.Util,Conditional Operator,componentType == newComponentType ? original : arrayOf(newComponentType),237
+com.squareup.moshi.internal.Util,Conditional Operator,changed ? new ParameterizedTypeImpl(newOwnerType original.getRawType() args) : original,258
+com.squareup.moshi.internal.Util,Conditional Operator,o != null ? o.hashCode() : 0,343
+com.squareup.moshi.internal.Util,Conditional Operator,type instanceof Class ? ((Class<?>) (type)).getName() : type.toString(),347
+com.squareup.moshi.internal.Util,Conditional Operator,genericDeclaration instanceof Class ? ((Class<?>) (genericDeclaration)) : null,363
+com.squareup.moshi.internal.Util,Conditional Operator,(ownerType == null) ? null : canonicalize(ownerType),391
+com.squareup.moshi.internal.Util,Conditional Operator,lowerBound != null ? new Type[]{ lowerBound } : EMPTY_TYPE_ARRAY,506
+com.squareup.moshi.internal.Util,Conditional Operator,(lowerBound != null ? 31 + lowerBound.hashCode() : 1),517
+com.squareup.moshi.internal.Util,Conditional Operator,(annotations.isEmpty() ? " (with no annotations)" : " annotated " + annotations),534
+com.squareup.moshi.internal.Util,Conditional Operator,wrapped == null ? type : wrapped,671
+com.squareup.moshi.internal.Util,Logic as Control Flow,return (((((name.startsWith("android.") || name.startsWith("androidx.")) || name.startsWith("java.")) || name.startsWith("javax.")) || name.startsWith("kotlin.")) || name.startsWith("kotlinx.")) || name.startsWith("scala."),143
+com.squareup.moshi.internal.Util,Logic as Control Flow,(((((name.startsWith("android.") || name.startsWith("androidx.")) || name.startsWith("java.")) || name.startsWith("javax.")) || name.startsWith("kotlin.")) || name.startsWith("kotlinx.")) || name.startsWith("scala."),143
+com.squareup.moshi.internal.Util,Logic as Control Flow,(((((name.startsWith("android.") || name.startsWith("androidx.")) || name.startsWith("java.")) || name.startsWith("javax.")) || name.startsWith("kotlin.")) || name.startsWith("kotlinx.")),143
+com.squareup.moshi.internal.Util,Logic as Control Flow,((((name.startsWith("android.") || name.startsWith("androidx.")) || name.startsWith("java.")) || name.startsWith("javax.")) || name.startsWith("kotlin.")),143
+com.squareup.moshi.internal.Util,Logic as Control Flow,(((name.startsWith("android.") || name.startsWith("androidx.")) || name.startsWith("java.")) || name.startsWith("javax.")),143
+com.squareup.moshi.internal.Util,Logic as Control Flow,((name.startsWith("android.") || name.startsWith("androidx.")) || name.startsWith("java.")),143
+com.squareup.moshi.internal.Util,Logic as Control Flow,if ((toResolve instanceof Class) && ((Class<?>) (toResolve)).isArray()) {     Class<?> original = ((Class<?>) (toResolve));     Type componentType = original.getComponentType();     Type newComponentType = resolve(context contextRawType componentType visitedTypeVariables);     return componentType == newComponentType ? original : arrayOf(newComponentType); } else if (toResolve instanceof GenericArrayType) {     GenericArrayType original = ((GenericArrayType) (toResolve));     Type componentType = original.getGenericComponentType();     Type newComponentType = resolve(context contextRawType componentType visitedTypeVariables);     return componentType == newComponentType ? original : arrayOf(newComponentType); } else if (toResolve instanceof ParameterizedType) {     ParameterizedType original = ((ParameterizedType) (toResolve));     Type ownerType = original.getOwnerType();     Type newOwnerType = resolve(context contextRawType ownerType visitedTypeVariables);     boolean changed = newOwnerType != ownerType;     Type[] args = original.getActualTypeArguments();     for (int t = 0 length = args.length; t < length; t++) {         Type resolvedTypeArgument = resolve(context contextRawType args[t] visitedTypeVariables);         if (resolvedTypeArgument != args[t]) {             if (!changed) {                 args = args.clone();                 changed = true;             }             args[t] = resolvedTypeArgument;         }     }     return changed ? new ParameterizedTypeImpl(newOwnerType original.getRawType() args) : original; } else if (toResolve instanceof WildcardType) {     WildcardType original = ((WildcardType) (toResolve));     Type[] originalLowerBound = original.getLowerBounds();     Type[] originalUpperBound = original.getUpperBounds();     if (originalLowerBound.length == 1) {         Type lowerBound = resolve(context contextRawType originalLowerBound[0] visitedTypeVariables);         if (lowerBound != originalLowerBound[0]) {             return supertypeOf(lowerBound);         }     } else if (originalUpperBound.length == 1) {         Type upperBound = resolve(context contextRawType originalUpperBound[0] visitedTypeVariables);         if (upperBound != originalUpperBound[0]) {             return subtypeOf(upperBound);         }     }     return original; } else {     return toResolve; },225
+com.squareup.moshi.internal.Util,Logic as Control Flow,if ((type instanceof Class<?>) && ((Class<?>) (type)).isPrimitive()) {     throw new IllegalArgumentException(("Unexpected primitive " + type) + ". Use the boxed type."); },367
+com.squareup.moshi.internal.Util,Logic as Control Flow,if ((enclosingClass == null) || (Types.getRawType(ownerType) != enclosingClass)) {     throw new IllegalArgumentException((("unexpected owner type for " + rawType) + ": ") + ownerType); },382
+com.squareup.moshi.internal.Util,Logic as Control Flow,return (other instanceof ParameterizedType) && Types.equals(this ((ParameterizedType) (other))),418
+com.squareup.moshi.internal.Util,Logic as Control Flow,return (o instanceof GenericArrayType) && Types.equals(this ((GenericArrayType) (o))),457
+com.squareup.moshi.internal.Util,Logic as Control Flow,return (other instanceof WildcardType) && Types.equals(this ((WildcardType) (other))),511
+com.squareup.moshi.internal.Util,Logic as Control Flow,if ((jsonClass == null) || (!jsonClass.generateAdapter())) {     return null; },544
+com.squareup.moshi.internal.Util,Logic as Control Flow,if ((!(type instanceof ParameterizedType)) && (adapterClass.getTypeParameters().length != 0)) {     throw new RuntimeException((((("Failed to find the generated JsonAdapter constructor for '" + type) + "'. Suspiciously the type was not parameterized but the target class '") + adapterClass.getCanonicalName()) + "' is generic. Consider using ") + "Types#newParameterizedType() to define these missing type variables." e); } else {     throw new RuntimeException("Failed to find the generated JsonAdapter constructor for " + type e); },581
+com.squareup.moshi.internal.Util,Logic as Control Flow,return (METADATA != null) && targetClass.isAnnotationPresent(METADATA),604
+com.squareup.moshi.internal.Util,Logic as Control Flow,if ((paramTypes.length != 0) && paramTypes[paramTypes.length - 1].equals(DEFAULT_CONSTRUCTOR_MARKER)) {     return ((Constructor<T>) (constructor)); },628
+com.squareup.moshi.JsonReader,Post Increment Decrement,scopes[stackSize++],235
+com.squareup.moshi.StandardJsonAdapters,Conditional Operator,(annotation != null) ? annotation.name() : constant.name(),278
+com.squareup.moshi.StandardJsonAdapters,Logic as Control Flow,if ((!reader.isLenient()) && Float.isInfinite(value)) {     throw new JsonDataException((("JSON forbids NaN and infinities: " + value) + " at path ") + reader.getPath()); },169
+com.squareup.moshi.AdapterMethodsFactory,Conditional Operator,(toAdapter == null) ? "@ToJson" : "@FromJson",55
+com.squareup.moshi.AdapterMethodsFactory,Conditional Operator,(Types.equals(parameterTypes[0] returnType) && qualifierAnnotations.equals(returnTypeAnnotations)) ? moshi.nextAdapter(factory returnType returnTypeAnnotations) : moshi.adapter(returnType returnTypeAnnotations),211
+com.squareup.moshi.AdapterMethodsFactory,Conditional Operator,(Types.equals(parameterTypes[0] returnType) && qualifierAnnotations.equals(returnTypeAnnotations)) ? moshi.nextAdapter(factory parameterTypes[0] qualifierAnnotations) : moshi.adapter(parameterTypes[0] qualifierAnnotations),286
+com.squareup.moshi.AdapterMethodsFactory,Conditional Operator,(Types.equals(this.type type) && annotations.equals(jsonAnnotations)) ? moshi.nextAdapter(factory type jsonAnnotations) : moshi.adapter(type jsonAnnotations),359
+com.squareup.moshi.AdapterMethodsFactory,Logic as Control Flow,if ((!fromAdapter.nullable) && (reader.peek() == JsonReader.Token.NULL)) {     reader.nextNull();     return null; } else {     try {         return fromAdapter.fromJson(moshi reader);     } catch (InvocationTargetException e) {         Throwable cause = e.getCause();         if (cause instanceof IOException)             throw ((IOException) (cause));          throw new JsonDataException((cause + " at ") + reader.getPath() cause);     } },92
+com.squareup.moshi.AdapterMethodsFactory,Logic as Control Flow,if (toAdapters.isEmpty() && fromAdapters.isEmpty()) {     throw new IllegalArgumentException("Expected at least one @ToJson or @FromJson method on " + adapter.getClass().getName()); },151
+com.squareup.moshi.AdapterMethodsFactory,Logic as Control Flow,if ((((parameterTypes.length >= 2) && (parameterTypes[0] == JsonWriter.class)) && (returnType == void.class)) && parametersAreJsonAdapters(2 parameterTypes)) {     Set<? extends Annotation> qualifierAnnotations = jsonAnnotations(parameterAnnotations[1]);     return new AdapterMethod(parameterTypes[1] qualifierAnnotations adapter method parameterTypes.length 2 true) {         @Override         public void toJson(Moshi moshi JsonWriter writer @Nullable         Object value) throws IOException InvocationTargetException {             invoke(writer value);         }     }; } else if ((parameterTypes.length == 1) && (returnType != void.class)) {     final Set<? extends Annotation> returnTypeAnnotations = jsonAnnotations(method);     final Set<? extends Annotation> qualifierAnnotations = jsonAnnotations(parameterAnnotations[0]);     boolean nullable = Util.hasNullable(parameterAnnotations[0]);     return new AdapterMethod(parameterTypes[0] qualifierAnnotations adapter method parameterTypes.length 1 nullable) {         private JsonAdapter<Object> delegate;          @Override         public void bind(Moshi moshi JsonAdapter.Factory factory) {             super.bind(moshi factory);             delegate = (Types.equals(parameterTypes[0] returnType) && qualifierAnnotations.equals(returnTypeAnnotations)) ? moshi.nextAdapter(factory returnType returnTypeAnnotations) : moshi.adapter(returnType returnTypeAnnotations);         }          @Override         public void toJson(Moshi moshi JsonWriter writer @Nullable         Object value) throws IOException InvocationTargetException {             Object intermediate = invoke(value);             delegate.toJson(writer intermediate);         }     }; } else {     throw new IllegalArgumentException((((((("Unexpected signature for " + method) + ".\n") + "@ToJson method signatures may have one of the following structures:\n") + "    <any access modifier> void toJson(JsonWriter writer T value) throws <any>;\n") + "    <any access modifier> void toJson(JsonWriter writer T value") + " JsonAdapter<any> delegate <any more delegates>) throws <any>;\n") + "    <any access modifier> R toJson(T value) throws <any>;\n"); },169
+com.squareup.moshi.AdapterMethodsFactory,Logic as Control Flow,(Types.equals(parameterTypes[0] returnType) && qualifierAnnotations.equals(returnTypeAnnotations)) ? moshi.nextAdapter(factory returnType returnTypeAnnotations) : moshi.adapter(returnType returnTypeAnnotations),211
+com.squareup.moshi.AdapterMethodsFactory,Logic as Control Flow,if ((((parameterTypes.length >= 1) && (parameterTypes[0] == JsonReader.class)) && (returnType != void.class)) && parametersAreJsonAdapters(1 parameterTypes)) {     return new AdapterMethod(returnType returnTypeAnnotations adapter method parameterTypes.length 1 true) {         @Override         public Object fromJson(Moshi moshi JsonReader reader) throws IOException InvocationTargetException {             return invoke(reader);         }     }; } else if ((parameterTypes.length == 1) && (returnType != void.class)) {     final Set<? extends Annotation> qualifierAnnotations = jsonAnnotations(parameterAnnotations[0]);     boolean nullable = Util.hasNullable(parameterAnnotations[0]);     return new AdapterMethod(returnType returnTypeAnnotations adapter method parameterTypes.length 1 nullable) {         JsonAdapter<Object> delegate;          @Override         public void bind(Moshi moshi JsonAdapter.Factory factory) {             super.bind(moshi factory);             delegate = (Types.equals(parameterTypes[0] returnType) && qualifierAnnotations.equals(returnTypeAnnotations)) ? moshi.nextAdapter(factory parameterTypes[0] qualifierAnnotations) : moshi.adapter(parameterTypes[0] qualifierAnnotations);         }          @Override         public Object fromJson(Moshi moshi JsonReader reader) throws IOException InvocationTargetException {             Object intermediate = delegate.fromJson(reader);             return invoke(intermediate);         }     }; } else {     throw new IllegalArgumentException((((((("Unexpected signature for " + method) + ".\n") + "@FromJson method signatures may have one of the following structures:\n") + "    <any access modifier> R fromJson(JsonReader jsonReader) throws <any>;\n") + "    <any access modifier> R fromJson(JsonReader jsonReader") + " JsonAdapter<any> delegate <any more delegates>) throws <any>;\n") + "    <any access modifier> R fromJson(T value) throws <any>;\n"); },258
+com.squareup.moshi.AdapterMethodsFactory,Logic as Control Flow,(Types.equals(parameterTypes[0] returnType) && qualifierAnnotations.equals(returnTypeAnnotations)) ? moshi.nextAdapter(factory parameterTypes[0] qualifierAnnotations) : moshi.adapter(parameterTypes[0] qualifierAnnotations),286
+com.squareup.moshi.AdapterMethodsFactory,Logic as Control Flow,if (Types.equals(adapterMethod.type type) && adapterMethod.annotations.equals(annotations)) {     return adapterMethod; },318
+com.squareup.moshi.AdapterMethodsFactory,Logic as Control Flow,(Types.equals(this.type type) && annotations.equals(jsonAnnotations)) ? moshi.nextAdapter(factory type jsonAnnotations) : moshi.adapter(type jsonAnnotations),359
+com.squareup.moshi.LinkedHashTreeMap,Infix Operator Precedence,Integer.highestOneBit(targetSize) * 2 - 1,667
+com.squareup.moshi.LinkedHashTreeMap,Post Increment Decrement,(size++) > threshold,191
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(comparator != null) ? comparator : ((Comparator) (NATURAL_ORDER)),70
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,node != null ? node.value : null,84
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,node != null ? node.value : null,123
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(comparator == NATURAL_ORDER) ? ((Comparable<Object>) (key)) : null,143
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(comparableKey != null) ? comparableKey.compareTo(nearest.key) : comparator.compare(key nearest.key),147
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(comparison < 0) ? nearest.left : nearest.right,157
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,key != null ? find(((K) (key)) false) : null,202
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,valuesEqual ? mine : null,219
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(left.height > right.height) ? left.last() : right.first(),263
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(left != null) ? left.height : 0,338
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(right != null) ? right.height : 0,339
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(rightRight != null) ? rightRight.height : 0,345
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(rightLeft != null) ? rightLeft.height : 0,346
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(leftRight != null) ? leftRight.height : 0,363
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(leftLeft != null) ? leftLeft.height : 0,364
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,left != null ? left.height : 0,415
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,pivotLeft != null ? pivotLeft.height : 0,415
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,pivotRight != null ? pivotRight.height : 0,416
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,right != null ? right.height : 0,440
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,pivotRight != null ? pivotRight.height : 0,440
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,pivotLeft != null ? pivotLeft.height : 0,441
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,result != null ? result : (entrySet = new EntrySet()),450
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,result != null ? result : (keySet = new KeySet()),456
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(key == null ? other.getKey() == null : key.equals(other.getKey())),508
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(value == null ? other.getValue() == null : value.equals(other.getValue())),509
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(key == null ? 0 : key.hashCode()),516
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(value == null ? 0 : value.hashCode()),516
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(leftSize > 0) ? leftBuilder.root() : null,597
+com.squareup.moshi.LinkedHashTreeMap,Conditional Operator,(rightSize > 0) ? rightBuilder.root() : null,598
+com.squareup.moshi.LinkedHashTreeMap,Logic as Control Flow,boolean valuesEqual = (mine != null) && equal(mine.value entry.getValue()),218
+com.squareup.moshi.LinkedHashTreeMap,Logic as Control Flow,return (a == b) || ((a != null) && a.equals(b)),223
+com.squareup.moshi.LinkedHashTreeMap,Logic as Control Flow,(a == b) || ((a != null) && a.equals(b)),223
+com.squareup.moshi.LinkedHashTreeMap,Logic as Control Flow,return (key == null ? other.getKey() == null : key.equals(other.getKey())) && (value == null ? other.getValue() == null : value.equals(other.getValue())),508
+com.squareup.moshi.LinkedHashTreeMap,Logic as Control Flow,return (o instanceof Map.Entry) && (findByEntry(((Entry<? ?>) (o))) != null),796
+com.squareup.moshi.LinkedHashTreeMap,Change of Literal Encoding,((size & 1) == 0),679
+com.squareup.moshi.LinkedHashTreeMap,Change of Literal Encoding,((size & 1) == 0),690
+com.squareup.moshi.ClassJsonAdapter,Conditional Operator,(jsonAnnotation != null) ? jsonAnnotation.name() : fieldName,149
+com.squareup.moshi.ClassJsonAdapter,Logic as Control Flow,if (rawType.isInterface() || rawType.isEnum())     return null; ,63
+com.squareup.moshi.ClassJsonAdapter,Logic as Control Flow,if ((rawType.getEnclosingClass() != null) && (!Modifier.isStatic(rawType.getModifiers()))) {     throw new IllegalArgumentException("Cannot serialize non-static nested class " + rawType.getName()); },86
+com.squareup.moshi.ClassJsonAdapter,Logic as Control Flow,if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers))     return false; ,166
+com.squareup.moshi.ClassJsonAdapter,Logic as Control Flow,(Modifier.isPublic(modifiers) || Modifier.isProtected(modifiers)) || (!platformType),167

@@ -1,0 +1,87 @@
+Class,Atom,Snippet,Line
+it.unimi.dsi.fastutil.io.FastMultiByteArrayInputStream,Post Increment Decrement,((int) ((position++) & SLICE_MASK)),149
+it.unimi.dsi.fastutil.io.FastMultiByteArrayInputStream,Conditional Operator,size >= SLICE_SIZE ? SLICE_SIZE : ((int) (size)),77
+it.unimi.dsi.fastutil.io.FastMultiByteArrayInputStream,Conditional Operator,length == 0 ? 0 : -1,157
+it.unimi.dsi.fastutil.io.FastMultiByteArrayInputStream,Type Conversion,(int)((size + SLICE_SIZE - 1) / SLICE_SIZE),74
+it.unimi.dsi.fastutil.io.FastMultiByteArrayInputStream,Type Conversion,(int)size,77
+it.unimi.dsi.fastutil.io.FastMultiByteArrayInputStream,Type Conversion,(int)(position++ & SLICE_MASK),149
+it.unimi.dsi.fastutil.io.FastMultiByteArrayInputStream,Type Conversion,(int)(position & SLICE_MASK),162
+it.unimi.dsi.fastutil.io.FastMultiByteArrayInputStream,Type Conversion,(int)(position >>> SLICE_BITS),175
+it.unimi.dsi.fastutil.Function,Conditional Operator,(value != null) || containsKey(key) ? value : defaultValue,130
+it.unimi.dsi.fastutil.Function,Logic as Control Flow,(value != null) || containsKey(key) ? value : defaultValue,130
+it.unimi.dsi.fastutil.io.FastBufferedOutputStream,Post Increment Decrement,buffer[pos++],140
+it.unimi.dsi.fastutil.io.FastBufferedOutputStream,Type Conversion,(byte)b,140
+it.unimi.dsi.fastutil.SafeMath,Conditional Operator,value < 0.0 ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY,68
+it.unimi.dsi.fastutil.SafeMath,Type Conversion,(char) value,33
+it.unimi.dsi.fastutil.SafeMath,Type Conversion,(byte) value,38
+it.unimi.dsi.fastutil.SafeMath,Type Conversion,(short) value,43
+it.unimi.dsi.fastutil.SafeMath,Type Conversion,(char) value,48
+it.unimi.dsi.fastutil.SafeMath,Type Conversion,(byte) value,53
+it.unimi.dsi.fastutil.SafeMath,Type Conversion,(short) value,58
+it.unimi.dsi.fastutil.SafeMath,Type Conversion,(int) value,63
+it.unimi.dsi.fastutil.SafeMath,Type Conversion,(float) value,70
+it.unimi.dsi.fastutil.io.InspectableFileCachedInputStream,Post Increment Decrement,buffer[((int) (position++))],257
+it.unimi.dsi.fastutil.io.InspectableFileCachedInputStream,Conditional Operator,read != 0 ? read : -1,228
+it.unimi.dsi.fastutil.io.InspectableFileCachedInputStream,Type Conversion,(int)position,219
+it.unimi.dsi.fastutil.io.InspectableFileCachedInputStream,Type Conversion,(int)position,220
+it.unimi.dsi.fastutil.io.InspectableFileCachedInputStream,Type Conversion,(int)position++,257
+it.unimi.dsi.fastutil.Size64,Conditional Operator,c instanceof Size64 ? ((Size64) (c)).size64() : c.size(),63
+it.unimi.dsi.fastutil.Size64,Conditional Operator,m instanceof Size64 ? ((Size64) (m)).size64() : m.size(),73
+it.unimi.dsi.fastutil.SortedPair,Logic as Control Flow,return Objects.equals(o left()) || Objects.equals(o right()),69
+it.unimi.dsi.fastutil.Arrays,Infix Operator Precedence,from + (mid - from) / 2,119
+it.unimi.dsi.fastutil.Arrays,Infix Operator Precedence,mid + (to - mid) / 2,123
+it.unimi.dsi.fastutil.Arrays,Infix Operator Precedence,from + len / 2,312
+it.unimi.dsi.fastutil.Arrays,Infix Operator Precedence,l + 2 * s,316
+it.unimi.dsi.fastutil.Arrays,Infix Operator Precedence,n - 2 * s,318
+it.unimi.dsi.fastutil.Arrays,Infix Operator Precedence,from + len / 2,412
+it.unimi.dsi.fastutil.Arrays,Infix Operator Precedence,l + 2 * s,417
+it.unimi.dsi.fastutil.Arrays,Infix Operator Precedence,n - 2 * s,419
+it.unimi.dsi.fastutil.Arrays,Pre Increment Decrement,first1 < (--last1),133
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(first1++ last1),134
+it.unimi.dsi.fastutil.Arrays,Pre Increment Decrement,first1 < (--last1),137
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(first1++ last1),138
+it.unimi.dsi.fastutil.Arrays,Pre Increment Decrement,first1 < (--last1),141
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(first1++ last1),142
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(a++ b),329
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(c d--),338
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(b++ c--),346
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(b++ c--),346
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(a++ b),436
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(c d--),445
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(b++ c--),453
+it.unimi.dsi.fastutil.Arrays,Post Increment Decrement,swapper.swap(b++ c--),453
+it.unimi.dsi.fastutil.Arrays,Conditional Operator,ab < 0 ? bc < 0 ? b : ac < 0 ? c : a : bc > 0 ? b : ac > 0 ? c : a,216
+it.unimi.dsi.fastutil.Arrays,Conditional Operator,bc < 0 ? b : ac < 0 ? c : a,217
+it.unimi.dsi.fastutil.Arrays,Conditional Operator,ac < 0 ? c : a,217
+it.unimi.dsi.fastutil.Arrays,Conditional Operator,bc > 0 ? b : ac > 0 ? c : a,218
+it.unimi.dsi.fastutil.Arrays,Conditional Operator,ac > 0 ? c : a,218
+it.unimi.dsi.fastutil.Arrays,Conditional Operator,current == null ? ForkJoinPool.commonPool() : current,226
+it.unimi.dsi.fastutil.Arrays,Logic as Control Flow,for (int j = i; (j > from) && (c.compare(j - 1 j) > 0); j--) {     swapper.swap(j j - 1); },255
+it.unimi.dsi.fastutil.Arrays,Logic as Control Flow,while ((b <= c) && ((comparison = comp.compare(b m)) <= 0)) {     if (comparison == 0) {         if (a == m)             m = b;         else if (b == m)             m = a;          swapper.swap(a++ b);     }     b++; } ,324
+it.unimi.dsi.fastutil.Arrays,Logic as Control Flow,while ((c >= b) && ((comparison = comp.compare(c m)) >= 0)) {     if (comparison == 0) {         if (c == m)             m = d;         else if (d == m)             m = c;          swapper.swap(c d--);     }     c--; } ,333
+it.unimi.dsi.fastutil.Arrays,Logic as Control Flow,if (((to - from) < PARALLEL_QUICKSORT_NO_FORK) || (pool.getParallelism() == 1))     quickSort(from to comp swapper); else {     pool.invoke(new ForkJoinGenericQuickSort(from to comp swapper)); },380
+it.unimi.dsi.fastutil.Arrays,Logic as Control Flow,for (int j = i; (j > from) && (comp.compare(j - 1 j) > 0); j--) {     swapper.swap(j j - 1); },405
+it.unimi.dsi.fastutil.Arrays,Logic as Control Flow,while ((b <= c) && ((comparison = comp.compare(b m)) <= 0)) {     if (comparison == 0) {         if (a == m)             m = b;         else if (b == m)             m = a;          swapper.swap(a++ b);     }     b++; } ,431
+it.unimi.dsi.fastutil.Arrays,Logic as Control Flow,while ((c >= b) && ((comparison = comp.compare(c m)) >= 0)) {     if (comparison == 0) {         if (c == m)             m = d;         else if (d == m)             m = c;          swapper.swap(c d--);     }     c--; } ,440
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Post Increment Decrement,buffer[pos++],196
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Post Increment Decrement,off + (read++),343
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Post Increment Decrement,off + (read++),365
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Post Increment Decrement,off + (read++),388
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Conditional Operator,result < 0 ? head == 0 ? -1 : head : result + head,219
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Conditional Operator,head == 0 ? -1 : head,219
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Conditional Operator,head == 0 ? -1 : head,222
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Conditional Operator,(is == System.in) ? skipByReading(toSkip) : is.skip(toSkip),492
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Logic as Control Flow,(((i < avail) && (i < remaining)) && ((k = buffer[pos + i]) != '\n')) && (k != '\r'),323
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Logic as Control Flow,while ((toSkip != 0) && ((result = (is == System.in) ? skipByReading(toSkip) : is.skip(toSkip)) < toSkip)) {     if (result == 0) {         if (is.read() == (-1))             break;          toSkip--;     } else         toSkip -= result;  } ,492
+it.unimi.dsi.fastutil.io.FastBufferedInputStream,Type Conversion,(int)n,482
+it.unimi.dsi.fastutil.PriorityQueues,Omitted Curly Braces,if (o == this)     return true; synchronized(sync) {     return q.equals(o); },150
+it.unimi.dsi.fastutil.PriorityQueues,Logic as Control Flow,return (o instanceof PriorityQueue) && ((PriorityQueue) (o)).isEmpty(),78
+it.unimi.dsi.fastutil.HashCommon,Type Conversion,(int)(l ^ (l >>> 32)),140
+it.unimi.dsi.fastutil.HashCommon,Type Conversion,(int)(l ^ (l >>> 32)),149
+it.unimi.dsi.fastutil.HashCommon,Type Conversion,(int)s,222
+it.unimi.dsi.fastutil.io.FastByteArrayOutputStream,Post Increment Decrement,array[position++],85
+it.unimi.dsi.fastutil.io.FastByteArrayOutputStream,Type Conversion,(byte)b,85
+it.unimi.dsi.fastutil.io.FastByteArrayOutputStream,Type Conversion,(int)newPosition,100
+it.unimi.dsi.fastutil.io.FastByteArrayInputStream,Post Increment Decrement,offset + (position++),104
+it.unimi.dsi.fastutil.io.FastByteArrayInputStream,Conditional Operator,length == 0 ? 0 : -1,115
+it.unimi.dsi.fastutil.io.FastByteArrayInputStream,Type Conversion,(int)n,93

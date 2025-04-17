@@ -1,0 +1,24 @@
+Class,Atom,Snippet,Line
+org.redisson.reactive.RedissonTransferQueueReactive,Arithmetic as Logic,if ((n - 1) == 0) {     return; },79
+org.redisson.reactive.RedissonListReactive,Arithmetic as Logic,if ((n - 1) == 0) {     return; },110
+org.redisson.rx.RedissonListRx,Arithmetic as Logic,if ((n - 1) == 0) {     return; },84
+com.google.common.net.InetAddresses,Infix Operator Precedence,2 * i + 1,416
+com.google.common.net.InetAddresses,Conditional Operator,(isIpv6) ? 16 : 4,1041
+com.google.common.net.InetAddresses,Logic as Control Flow,if ((ipString.charAt(i) == IPV6_DELIMITER) && (ipString.charAt(i + 1) == IPV6_DELIMITER)) {     if (hasSkip) {         return null;     }     hasSkip = true;     partsSkipped++;     if (i == 0) {         partsSkipped++;     }     if (i == (ipString.length() - 2)) {         partsSkipped++;     } },258
+com.google.common.net.InetAddresses,Logic as Control Flow,if ((ipString.charAt(0) == IPV6_DELIMITER) && (ipString.charAt(1) != IPV6_DELIMITER)) {     return null; },272
+com.google.common.net.InetAddresses,Logic as Control Flow,if ((ipString.charAt(ipString.length() - 1) == IPV6_DELIMITER) && (ipString.charAt(ipString.length() - 2) != IPV6_DELIMITER)) {     return null; },275
+com.google.common.net.InetAddresses,Logic as Control Flow,if ((length > 1) && (ipString.charAt(start) == '0')) {     throw new NumberFormatException(); },340
+com.google.common.net.InetAddresses,Logic as Control Flow,if (hostAddr.startsWith("[") && hostAddr.endsWith("]")) {     ipString = hostAddr.substring(1 hostAddr.length() - 1);     expectBytes = 16; } else {     ipString = hostAddr;     expectBytes = 4; },546
+com.google.common.net.InetAddresses,Logic as Control Flow,return (isCompatIPv4Address(ip) || is6to4Address(ip)) || isTeredoAddress(ip),822
+com.google.common.net.InetAddresses,Logic as Control Flow,(isCompatIPv4Address(ip) || is6to4Address(ip)) || isTeredoAddress(ip),822
+com.google.common.net.InetAddresses,Type Conversion,(byte) octet,355
+com.google.common.net.InetAddresses,Type Conversion,(short) hextet,370
+com.google.common.net.InetAddresses,Type Conversion,(byte) ~clientBytes[i],756
+com.google.common.net.InetAddresses,Type Conversion,(byte) 0xfe,793
+com.google.common.net.InetAddresses,Type Conversion,(byte) 0xff,884
+com.google.common.net.InetAddresses,Type Conversion,(byte) 0xff,1101
+com.google.common.net.InetAddresses,Type Conversion,(byte) 0xff,1123
+com.google.common.net.InetAddresses,Type Conversion,(byte) 0xff,1145
+com.google.common.net.InetAddresses,Repurposed Variables,while ((i >= 0) && (addr[i] == ((byte) (0x0)))) {     addr[i] = ((byte) (0xff));     i--; } ,1100
+com.google.common.net.InetAddresses,Repurposed Variables,while ((i >= 0) && (addr[i] == ((byte) (0xff)))) {     addr[i] = 0;     i--; } ,1123
+org.redisson.rx.RedissonTransferQueueRx,Arithmetic as Logic,if ((n - 1) == 0) {     return; },67
