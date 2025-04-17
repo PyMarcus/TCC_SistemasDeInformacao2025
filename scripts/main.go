@@ -1,7 +1,7 @@
 /*
  This script performs web scraping and database insertion for Java class files.
 
- It reads one or more CSV files from the local dataset directory. Each CSV contains metadata about 
+ It reads one or more CSV files from the local dataset directory. Each CSV contains metadata about
  Java classes such as class path, atom, code snippet, and line number. For each entry, the script:
 
  1. Constructs the full URL to the Java class file using a predefined GitHub base path.
@@ -35,6 +35,7 @@ type dataset struct {
 	atom       string
 	snippet    string
 	line       string
+	githubLink string
 	statusCode string
 }
 
@@ -87,6 +88,7 @@ func formatLink(baseLink, resource string) string {
 }
 
 func getClassFromGithub(link *dataset) string {
+	link.githubLink = link.class
 	response, err := http.Get(link.class)
 	if err != nil {
 		color.Red(fmt.Sprintf("[-] Error: %v to %v", err, link))
@@ -116,9 +118,9 @@ func getClassFromGithub(link *dataset) string {
 func insertIntoDatabase(row dataset, pool *pgxpool.Pool) {
 	classContent := getClassFromGithub(&row)
 
-	sql := "INSERT INTO dataset (class, atom, snippet, line, status_code) VALUES ($1, $2, $3, $4, $5)"
+	sql := "INSERT INTO dataset (class, atom, snippet, line, status_code, github_link) VALUES ($1, $2, $3, $4, $5, $6)"
 
-	_, err := pool.Exec(context.Background(), sql, classContent, row.atom, row.snippet, row.line, row.statusCode)
+	_, err := pool.Exec(context.Background(), sql, classContent, row.atom, row.snippet, row.line, row.statusCode, row.githubLink)
 
 	if err != nil {
 		color.Red(fmt.Sprintf("[-] Error to insert %v into database: %v", row, err))
