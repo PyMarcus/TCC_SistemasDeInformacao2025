@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -9,7 +10,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
-
+	"github.com/fatih/color"
 )
 
 /*
@@ -23,6 +24,7 @@ type dataset struct{
 	atom string 
 	snippet string 
 	line int 
+	statusCode string
 }
 
 // readDataset reads the given CSV file and returns a slice of dataset structs.
@@ -41,7 +43,7 @@ func readDataset(fileName, baseLink string) []dataset{
 	file, err := os.Open(fileName)
 
 	if err != nil{
-		log.Printf("[-] Fail to read csv file: %s", fileName)
+		color.Red(fmt.Sprintf("[-] Fail to read csv file: %s", fileName))
 		panic(err)
 	}
 
@@ -55,7 +57,7 @@ func readDataset(fileName, baseLink string) []dataset{
 	records = records[1:] // skip title
 
 	if err != nil{
-		log.Printf("[-] Fail to read csv all file: %s", fileName)
+		color.Red(fmt.Sprintf("[-] Fail to read csv all file: %s", fileName))
 		panic(err)
 	}
 
@@ -79,29 +81,33 @@ func formatLink(baseLink, resource string) string{
 	return baseLink + resource
 }
 
-func getClassFromGithub(link string) string{
-	response, err := http.Get(link)
+func getClassFromGithub(link *dataset) string{
+	response, err := http.Get(link.class)
 	if err != nil{
-		log.Printf("Fail to download link: %s. Status: %s",link, response.Status)
+		color.Red(fmt.Sprintf("Fail to download link: %s. Status: %s",link.class, response.Status))
 		return ""
 	}
 	defer response.Body.Close()
 
 	if response.Status == STATUS_OK{
+		link.statusCode = STATUS_OK
 		content, err := io.ReadAll(response.Body)
 		if err != nil {
-			log.Printf("[-] Fail to read page content: %v", err)
+			color.Red(fmt.Sprintf("[-] Fail to read page content: %v", err))
 			return ""
 		}
 
+		color.Blue("[+] Download Success: " + STATUS_OK)
 		code := string(content)
-		log.Println(code)
+		return code
+	}else{
+		link.statusCode = response.Status
 	}
 	return ""
 }
 
 func insertIntoDatabase(row dataset){
-	classContent := getClassFromGithub(row.class)
+	classContent := getClassFromGithub(&row)
 	log.Println(classContent)
 }
 
@@ -118,7 +124,7 @@ func main(){
 	files, err := os.ReadDir(basePath)
 
 	if err != nil{
-		log.Printf("[-] Fail to read dir: %s", basePath)
+		color.Red(fmt.Sprintf("[-] Fail to read dir: %s", basePath))
 		panic(err)
 	}
 
@@ -134,5 +140,5 @@ func main(){
 		}
 		break
 	}
-
+	color.Green("[+] Completed!")
 }
