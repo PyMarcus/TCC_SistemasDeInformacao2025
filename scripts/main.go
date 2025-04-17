@@ -1,3 +1,16 @@
+/*
+ This script performs web scraping and database insertion for Java class files.
+
+ It reads one or more CSV files from the local dataset directory. Each CSV contains metadata about 
+ Java classes such as class path, atom, code snippet, and line number. For each entry, the script:
+
+ 1. Constructs the full URL to the Java class file using a predefined GitHub base path.
+ 2. Downloads the class file content via HTTP.
+ 3. Inserts the downloaded content and metadata into a PostgreSQL database.
+
+ Environment variables for database connection are loaded from a `.env` file using the `godotenv` package.
+*/
+
 package main
 
 import (
@@ -15,10 +28,6 @@ import (
 	"github.com/joho/godotenv"
 )
 
-/*
- This script does webscrapping to download the classes from csv file
-*/
-
 const STATUS_OK string = "200 OK"
 
 type dataset struct {
@@ -29,20 +38,14 @@ type dataset struct {
 	statusCode string
 }
 
-// readDataset reads the given CSV file and returns a slice of dataset structs.
-// It parses the file, extracting each row and converting it into a dataset struct.
-// The function assumes the CSV has a specific format that matches the fields of the dataset struct.
-//
-// Parameters:
-//   - fileName (string): The path to the CSV file to be read.
-//   - baseLink (string): The path to the resource in github.
-//
-// Returns:
-//   - []dataset: A slice of dataset structs representing the data from the CSV file.
-//
-// Example usage:
-//
-//	datasets := readDataset("data.csv")
+type dBSettings struct {
+	host     string
+	port     string
+	user     string
+	password string
+	database string
+}
+
 func readDataset(fileName, baseLink string) []dataset {
 	file, err := os.Open(fileName)
 
@@ -122,14 +125,6 @@ func insertIntoDatabase(row dataset, pool *pgxpool.Pool) {
 		return
 	}
 
-}
-
-type dBSettings struct {
-	host     string
-	port     string
-	user     string
-	password string
-	database string
 }
 
 func init() {
