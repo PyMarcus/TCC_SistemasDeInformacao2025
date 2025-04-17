@@ -8,7 +8,7 @@ com.google.common.net.InetAddresses,Logic as Control Flow,if ((ipString.charAt(i
 com.google.common.net.InetAddresses,Logic as Control Flow,if ((ipString.charAt(0) == IPV6_DELIMITER) && (ipString.charAt(1) != IPV6_DELIMITER)) {     return null; },272
 com.google.common.net.InetAddresses,Logic as Control Flow,if ((ipString.charAt(ipString.length() - 1) == IPV6_DELIMITER) && (ipString.charAt(ipString.length() - 2) != IPV6_DELIMITER)) {     return null; },275
 com.google.common.net.InetAddresses,Logic as Control Flow,if ((length > 1) && (ipString.charAt(start) == '0')) {     throw new NumberFormatException(); },340
-com.google.common.net.InetAddresses,Logic as Control Flow,if (hostAddr.startsWith("[") && hostAddr.endsWith("]")) {     ipString = hostAddr.substring(1 hostAddr.length() - 1);     expectBytes = 16; } else {     ipString = hostAddr;     expectBytes = 4; },546
+com.google.common.net.InetAddresses,Logic as Control Flow,if (hostAddr.startsWith("[") && hostAddr.endsWith("]")) { ipString = hostAddr.substring(1 hostAddr.length() - 1); expectBytes = 16; } else { ipString = hostAddr; expectBytes = 4; },546
 com.google.common.net.InetAddresses,Logic as Control Flow,return (isCompatIPv4Address(ip) || is6to4Address(ip)) || isTeredoAddress(ip),822
 com.google.common.net.InetAddresses,Logic as Control Flow,(isCompatIPv4Address(ip) || is6to4Address(ip)) || isTeredoAddress(ip),822
 com.google.common.net.InetAddresses,Type Conversion,(byte) octet,355
