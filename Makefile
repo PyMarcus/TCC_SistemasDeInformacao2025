@@ -1,3 +1,7 @@
+# Migration download
+migrate-download:
+	curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.tar.gz | tar xvz & mv migrate /usr/local/bin/
+
 # Database settings
 DATABASE_NAME=marcus_db
 DATABASE_USER=marcus
@@ -23,6 +27,10 @@ migrate-reset:
 	migrate -path $(MIGRATIONS_DIR) -database "$(DATABASE_URL)" drop -f
 	migrate -path $(MIGRATIONS_DIR) -database "$(DATABASE_URL)" up
 
+migrate-seed-dataset:
+	migrate -path $(MIGRATIONS_DIR) -database "$(DATABASE_URL)" goto 2
+
+# Golang runner
 # Create dataset
 create-from-dataset:
 	@echo reading dataset files
