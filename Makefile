@@ -36,3 +36,9 @@ create-from-dataset:
 	@echo reading dataset files
 	go run scripts/main.go 
 
+
+run:
+	go run cmd/main.go 
+
+tests:
+	go test -v ./...
