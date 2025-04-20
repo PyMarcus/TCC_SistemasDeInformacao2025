@@ -10,7 +10,7 @@ MIGRATIONS_DIR=./database/migrations
 
 # Create migrations EX: make create_migration NAME=create_atoms_table
 create-migrations: 
-	migrations create -ext sql -dir $(MIGRATIONS_DIR) -seq $(NAME)
+	migrate create -ext sql -dir $(MIGRATIONS_DIR) -seq $(NAME)
 
 migrate-up:
 	migrate -path $(MIGRATIONS_DIR) -database "$(DATABASE_URL)" up 
