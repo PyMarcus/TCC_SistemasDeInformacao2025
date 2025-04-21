@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"errors"
 	"net/http"
 	"testing"
 
@@ -35,4 +36,25 @@ func TestFetch(t *testing.T) {
 
 	assert.Equal(t, expectedRequest, req)
 
+}
+
+func TestFetch_BuildError(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockClient := mock_core.NewMockAPIRequestBuilder(ctrl)
+
+	mockClient.EXPECT().SetMethod(constants.HTTP_GET_METHOD).Return(mockClient)
+	mockClient.EXPECT().SetURL("https://invalid-url").Return(mockClient)
+	mockClient.EXPECT().SetHeaders(map[string]string{}).Return(mockClient)
+	mockClient.EXPECT().SetBody("").Return(mockClient)
+	mockClient.EXPECT().Build().Return(nil, errors.New("invalid request"))
+
+	usecase := NewAPIRequestUsecase(mockClient)
+
+	req, err := usecase.Fetch("https://invalid-url", map[string]string{}, "")
+
+	assert.Nil(t, req)
+	assert.Error(t, err)
+	assert.EqualError(t, err, "invalid request")
 }
