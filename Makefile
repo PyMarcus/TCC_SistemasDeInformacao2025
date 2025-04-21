@@ -2,6 +2,11 @@
 migrate-download:
 	curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.tar.gz | tar xvz & mv migrate /usr/local/bin/
 
+# Mockgen download
+mockgen-download:
+	sudo apt install mockgen 
+
+
 # Database settings
 DATABASE_NAME=marcus_db
 DATABASE_USER=marcus
