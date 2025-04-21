@@ -6,6 +6,13 @@ migrate-download:
 mockgen-download:
 	sudo apt install mockgen 
 
+# Linter download
+linter-download:
+	curl -sSfL https://github.com/golangci/golangci-lint/releases/download/v1.46.2/golangci-lint-1.46.2-linux-amd64.tar.gz | tar -xzv & sudo mv golangci-lint-1.46.2-linux-amd64/golangci-lint /usr/local/bin/
+
+linter-run:
+	golangci-lint run 
+
 
 # Database settings
 DATABASE_NAME=marcus_db

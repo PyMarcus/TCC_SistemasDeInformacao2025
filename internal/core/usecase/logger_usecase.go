@@ -3,6 +3,7 @@ package usecase
 import (
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/constants"
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/core/ports/logger"
@@ -19,7 +20,7 @@ var LoggerConfig *zap.Logger
 
 func init(){
 	writerSyncer := zapcore.AddSync(&lumberjack.Logger{
-		Filename:   constants.LOG_NAME,
+		Filename:   filepath.Join(constants.LOG_DIR, constants.LOG_NAME),
 		MaxSize:    300, // megabytes
 		MaxBackups: 5,
 		MaxAge:     30,   // days
