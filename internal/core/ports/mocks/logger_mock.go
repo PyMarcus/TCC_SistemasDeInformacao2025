@@ -8,6 +8,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	zap "go.uber.org/zap"
 )
 
 // MockLogger is a mock of Logger interface.
@@ -34,7 +35,7 @@ func (m *MockLogger) EXPECT() *MockLoggerMockRecorder {
 }
 
 // Error mocks base method.
-func (m *MockLogger) Error(msg string, fields ...any) {
+func (m *MockLogger) Error(msg string, fields ...zap.Field) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{msg}
 	for _, a := range fields {
@@ -51,7 +52,7 @@ func (mr *MockLoggerMockRecorder) Error(msg interface{}, fields ...interface{}) 
 }
 
 // Info mocks base method.
-func (m *MockLogger) Info(msg string, fields ...any) {
+func (m *MockLogger) Info(msg string, fields ...zap.Field) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{msg}
 	for _, a := range fields {
