@@ -1,0 +1,1 @@
+{"level":"info","timestamp":"2025-04-21T17:04:29.844-0300","caller":"cmd/main.go:21","msg":"postgres://marcus:marcus123@localhost:5432/marcus_db?sslmode=disable","Function":"main"}
