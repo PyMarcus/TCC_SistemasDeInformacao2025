@@ -37,10 +37,10 @@ func (m *MockAPIRequestBuilder) EXPECT() *MockAPIRequestBuilderMockRecorder {
 }
 
 // Build mocks base method.
-func (m *MockAPIRequestBuilder) Build() (*http.Request, error) {
+func (m *MockAPIRequestBuilder) Build() (*http.Response, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Build")
-	ret0, _ := ret[0].(*http.Request)
+	ret0, _ := ret[0].(*http.Response)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

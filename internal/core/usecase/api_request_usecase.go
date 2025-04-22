@@ -17,7 +17,7 @@ func NewAPIRequestUsecase(clientService core.APIRequestBuilder) *APIRequestUseca
 	}
 }
 
-func (aru *APIRequestUsecase) Fetch(url string, headers map[string]string, body string) (*http.Request, error){
+func (aru *APIRequestUsecase) Fetch(url string, headers map[string]string, body string) (*http.Response, error){
 	request, err := aru.Client.
 						SetMethod(constants.HTTP_GET_METHOD).
 						SetURL(url). 

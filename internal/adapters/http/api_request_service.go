@@ -45,7 +45,7 @@ func (ars *APIRequestService) SetTimeout(timeout time.Duration) core.APIRequestB
 	return ars
 }
 
-func (ars *APIRequestService) Build() (*http.Request, error) {
+func (ars *APIRequestService) Build() (*http.Response, error) {
 	req, err := http.NewRequest(
 		ars.request.Method,
 		ars.request.Url,
@@ -76,5 +76,5 @@ func (ars *APIRequestService) Build() (*http.Request, error) {
 		return nil, fmt.Errorf("API request failed with status code %d", response.StatusCode)
 	}
 
-	return req, nil
+	return response, nil
 }
