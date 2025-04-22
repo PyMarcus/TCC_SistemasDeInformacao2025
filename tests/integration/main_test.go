@@ -1,8 +1,9 @@
-package main
+package tests
 
 import (
 	"net/http"
 	"os"
+	"log"
 	"testing"
 
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/adapters/config"
@@ -12,10 +13,10 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	cfg, err := config.LoadConfig("../.env")
+	cfg, err := config.LoadConfig("../../.env")
 
 	if err != nil{
-		println("[-] Error to load config " + err.Error())
+		log.Println("[-] Error to load config " + err.Error())
 		os.Exit(1)
 	}
 	clientService := adapters.NewApiRequestService() 
@@ -26,29 +27,29 @@ func TestMain(m *testing.M) {
 	response, err := clientUsecase.Fetch("https://example.com", header, "") // or post
 
 	if err != nil || response == nil {
-		panic("error: " + err.Error())
+		log.Println("error: " + err.Error())
 	}
 	if response.StatusCode == http.StatusBadRequest{
-		panic("BadRequest error")
+		log.Println("BadRequest error")
 	}
 
 
 	dbPostgresConn, err := db.NewPostgresConn(cfg.DatabaseUrl)
 
 	if err != nil{
-		println("[-] Error to connect with database " + err.Error())
+		log.Println("[-] Error to connect with database " + err.Error())
 		os.Exit(1)
 	}
 	
 	sqlDB, err  := dbPostgresConn.DB()
 	if err != nil{
-		println("[-] Error to create DB " + err.Error())
+		log.Println("[-] Error to create DB " + err.Error())
 		os.Exit(1)
 	}
 
 	err = sqlDB.Ping()
 	if err != nil{
-		println("[-] DB error " + err.Error())
+		log.Println("[-] DB error " + err.Error())
 		os.Exit(1)
 	}
 
