@@ -22,7 +22,7 @@ func TestMain(m *testing.M) {
 	header := make(map[string]string)
 	header["Content-Type"] = "application/json"
 
-	response, err := clientUsecase.Fetch("https://example.com", header, "")
+	response, err := clientUsecase.Fetch("https://example.com", header, "") // or post
 
 	if err != nil || response == nil {
 		panic("error: " + err.Error())
