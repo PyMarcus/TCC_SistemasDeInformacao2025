@@ -1,4 +1,4 @@
-package usecase
+package unit
 
 import (
 	"errors"
@@ -8,6 +8,7 @@ import (
 
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/constants"
 	mock_core "github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/adapters/http/mocks"
+	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/core/usecase"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 )
@@ -33,7 +34,7 @@ func TestPost(t *testing.T){
 	mockClient.EXPECT().SetBody("").Return(mockClient)
 	mockClient.EXPECT().Build().Return(expectedResponse, nil)
 
-	mockUsecase := NewAPIRequestUsecase(mockClient)
+	mockUsecase := usecase.NewAPIRequestUsecase(mockClient)
 
 	response, err := mockUsecase.Post("https://example.com", map[string]string{"Authorization": "Bearer test-token"}, "")
 	assert.NoError(t, err)
@@ -55,7 +56,7 @@ func TestPost_BuildError(t *testing.T) {
 	mockClient.EXPECT().SetBody(`{"key":"value"}`).Return(mockClient)
 	mockClient.EXPECT().Build().Return(nil, errors.New("invalid request"))
 
-	mockUsecase := NewAPIRequestUsecase(mockClient)
+	mockUsecase := usecase.NewAPIRequestUsecase(mockClient)
 
 	response, err := mockUsecase.Post("https://invalid-url", map[string]string{}, `{"key":"value"}`)
 
@@ -86,7 +87,7 @@ func TestFetch(t *testing.T) {
 	mockClient.EXPECT().SetBody("").Return(mockClient)
 	mockClient.EXPECT().Build().Return(expectedResponse, nil)
 
-	mockUsecase := NewAPIRequestUsecase(mockClient)
+	mockUsecase := usecase.NewAPIRequestUsecase(mockClient)
 
 	response, err := mockUsecase.Fetch("https://example.com", map[string]string{"Authorization": "Bearer test-token"}, "")
 
@@ -110,7 +111,7 @@ func TestFetch_BuildError(t *testing.T) {
 	mockClient.EXPECT().SetBody("").Return(mockClient)
 	mockClient.EXPECT().Build().Return(nil, errors.New("invalid request"))
 
-	usecase := NewAPIRequestUsecase(mockClient)
+	usecase := usecase.NewAPIRequestUsecase(mockClient)
 
 	response, err := usecase.Fetch("https://invalid-url", map[string]string{}, "")
 
