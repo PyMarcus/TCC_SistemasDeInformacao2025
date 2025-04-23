@@ -15,6 +15,6 @@ func NewDatasetUsecase(repo repositories.DatasetRepository) *DatasetUsecase {
 	}
 }
 
-func (du DatasetUsecase) FindAll() ([]*domain.DatasetModel, error) {
+func (du DatasetUsecase) FindAll() ([]*domain.Datasets, error) {
 	return du.Repo.FindAll()
 }

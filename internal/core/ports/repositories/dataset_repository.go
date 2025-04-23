@@ -5,5 +5,5 @@ import (
 )
 
 type DatasetRepository interface{
-	FindAll() ([]*domain.DatasetModel, error)
+	FindAll() ([]*domain.Datasets, error)
 }

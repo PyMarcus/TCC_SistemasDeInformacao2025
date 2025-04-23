@@ -1,14 +1,15 @@
 package tests
 
 import (
+	"log"
 	"net/http"
 	"os"
-	"log"
 	"testing"
 
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/adapters/config"
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/adapters/db"
 	adapters "github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/adapters/http"
+	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/adapters/repository"
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/core/usecase"
 )
 
@@ -51,6 +52,29 @@ func TestMain(m *testing.M) {
 	if err != nil{
 		log.Println("[-] DB error " + err.Error())
 		os.Exit(1)
+	}
+
+	datasetRepo := repository.NewDatasetRepository(dbPostgresConn)
+
+	datasetUsecase := usecase.NewDatasetUsecase(datasetRepo)
+
+	dataset, err := datasetUsecase.FindAll()
+
+	if err != nil{
+		log.Println("[-] DB error " + err.Error())
+		os.Exit(1)
+	}
+
+
+	err = sqlDB.Ping()
+	if err != nil{
+		log.Println("[-] DB error " + err.Error())
+		os.Exit(1)
+	}
+
+	for _, row := range dataset{
+		log.Println(row.Atom)
+		break
 	}
 
 	os.Exit(m.Run())

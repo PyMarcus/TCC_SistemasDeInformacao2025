@@ -16,8 +16,8 @@ func NewDatasetRepository(db *gorm.DB) repositories.DatasetRepository {
 	}
 }
 
-func (dr *DatasetRepository) FindAll() ([]*domain.DatasetModel, error) {
-	var dataset []*domain.DatasetModel
+func (dr *DatasetRepository) FindAll() ([]*domain.Datasets, error) {
+	var dataset []*domain.Datasets
 
 	if err := dr.db.Find(&dataset).Error; err != nil {
 		return nil, err
