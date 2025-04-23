@@ -4,7 +4,7 @@ CREATE TABLE "atoms" (
   "question" text,
   "agent_one_answer" text,
   "agent_two_answer" text,
-  "dataset_id" integer,
+  "datasets_id" integer,
   "atom_searched" varchar,
   "atom_finded_by_agent_one" varchar,
   "atom_finded_by_agent_two" varchar,
