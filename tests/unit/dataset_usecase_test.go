@@ -17,7 +17,7 @@ func Test_FindAll(t *testing.T){
 
 	mockRepo := mockports.NewMockDatasetRepository(ctrl)
 
-	expected := []*domain.DatasetModel{
+	expected := []*domain.Datasets{
 		{ID: 1, Class: "java", Atom: "example", Snippet: "1 + 2"},
 	}
 

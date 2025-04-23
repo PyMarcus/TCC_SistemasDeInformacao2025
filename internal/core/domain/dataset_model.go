@@ -1,6 +1,6 @@
 package domain
 
-type DatasetModel struct {
+type Datasets struct {
 	ID               uint   `gorm:"primaryKey"`
 	Class            string `gorm:"column:class"`
 	Atom             string `gorm:"column:atom"`
@@ -10,4 +10,8 @@ type DatasetModel struct {
 	StatusCode       string `gorm:"column:status_code"`
 	MarkedByAgentOne bool   `gorm:"column:marked_by_agent_one"`
 	MarkedByAgentTwo bool   `gorm:"column:marked_by_agent_two"`
+}
+
+func (Datasets) TableName() string {
+	return "datasets"
 }

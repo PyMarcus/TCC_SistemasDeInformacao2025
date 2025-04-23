@@ -35,10 +35,10 @@ func (m *MockDatasetRepository) EXPECT() *MockDatasetRepositoryMockRecorder {
 }
 
 // FindAll mocks base method.
-func (m *MockDatasetRepository) FindAll() ([]*domain.DatasetModel, error) {
+func (m *MockDatasetRepository) FindAll() ([]*domain.Datasets, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FindAll")
-	ret0, _ := ret[0].([]*domain.DatasetModel)
+	ret0, _ := ret[0].([]*domain.Datasets)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

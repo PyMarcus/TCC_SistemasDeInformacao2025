@@ -1,1 +1,1 @@
-DELETE FROM dataset;
+DELETE FROM datasets;

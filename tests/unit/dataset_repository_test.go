@@ -14,7 +14,7 @@ func TestFindAll(t *testing.T){
 
 	defer cleanup()
 
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "dataset_models"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "datasets"`)).
 	WillReturnRows(
 		sqlmock.NewRows(
 			[]string{

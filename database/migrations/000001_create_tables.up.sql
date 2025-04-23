@@ -28,7 +28,7 @@ CREATE TABLE "errors" (
   "created_at" timestamp DEFAULT (CURRENT_TIMESTAMP)
 );
 
-CREATE TABLE "dataset" (
+CREATE TABLE "datasets" (
   "id" serial PRIMARY KEY,
   "class" text,
   "atom" varchar,
@@ -42,7 +42,7 @@ CREATE TABLE "dataset" (
 
 COMMENT ON COLUMN "dataset"."class" IS 'Class java downloaded';
 
-ALTER TABLE "atoms" ADD FOREIGN KEY ("dataset_id") REFERENCES "dataset" ("id");
+ALTER TABLE "atoms" ADD FOREIGN KEY ("datasets_id") REFERENCES "datasets" ("id");
 
 ALTER TABLE "atoms" ADD FOREIGN KEY ("question_id") REFERENCES "questions" ("id");
 
