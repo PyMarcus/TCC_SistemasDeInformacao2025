@@ -52,5 +52,7 @@ create-from-dataset:
 run:
 	go run cmd/main.go 
 
+.PHONY: tests
+
 tests:
-	go test -v -cover -race ./...
+	go test -v -cover -race ./tests/...
