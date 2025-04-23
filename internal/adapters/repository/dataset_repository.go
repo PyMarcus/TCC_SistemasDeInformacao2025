@@ -24,3 +24,10 @@ func (dr *DatasetRepository) FindAll() ([]*domain.Datasets, error) {
 	}
 	return dataset, nil
 }
+
+func (dr *DatasetRepository) UpdateMarkedByAgent(agent, id int) error{
+	if agent == 1{
+		return dr.db.Model(&domain.Datasets{}).Where("id = ?", id).Update("marked_by_agent_one", true).Error
+	}
+	return dr.db.Model(&domain.Datasets{}).Where("id = ?", id).Update("marked_by_agent_two", true).Error
+}
