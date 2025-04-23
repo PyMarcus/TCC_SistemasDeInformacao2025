@@ -40,7 +40,7 @@ CREATE TABLE "datasets" (
   "marked_by_agent_two" bool
 );
 
-COMMENT ON COLUMN "dataset"."class" IS 'Class java downloaded';
+COMMENT ON COLUMN "datasets"."class" IS 'Class java downloaded';
 
 ALTER TABLE "atoms" ADD FOREIGN KEY ("datasets_id") REFERENCES "datasets" ("id");
 
