@@ -14,6 +14,22 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: marcus_db
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: marcus123
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U marcus"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      
     steps:
     - uses: actions/checkout@v4
 
@@ -22,5 +38,24 @@ jobs:
       with:
         go-version: '1.24'
 
+    - name: Wait for PostgresSQL
+      run: |
+          until pg_isready -h localhost -p 5432 -U marcus; do
+            echo "Aguardando o PostgreSQL iniciar..."
+            sleep 2
+          done
+
+    - name: Install Migrate CLI
+      run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.tar.gz | tar xvz
+          sudo mv migrate /usr/local/bin/
+    
+    - name: Run Migrations
+      env:
+          DATABASE_URL: postgres://marcus:marcus123@localhost:5432/marcus_db?sslmode=disable
+      run: make migrate-up
+
     - name: Test
+      env:
+          DATABASE_URL: postgres://marcus:marcus123@localhost:5432/marcus_db?sslmode=disable
       run: make tests
