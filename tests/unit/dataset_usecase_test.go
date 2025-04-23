@@ -30,3 +30,19 @@ func Test_FindAll(t *testing.T){
 	assert.NoError(t, err)
 	assert.Equal(t, result, expected)
 }
+
+func Test_UpdateMarkedByAgent(t *testing.T){
+	ctrl := gomock.NewController(t)
+
+	defer ctrl.Finish()
+
+	mockRepo := mockports.NewMockDatasetRepository(ctrl)
+
+	mockRepo.EXPECT().UpdateMarkedByAgent(1, 1).Times(1)
+
+	dtUsecase := usecase.NewDatasetUsecase(mockRepo)
+
+	err := dtUsecase.UpdateMarkedByAgent(1, 1)
+
+	assert.NoError(t, err)
+}

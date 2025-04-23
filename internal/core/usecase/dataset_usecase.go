@@ -18,3 +18,7 @@ func NewDatasetUsecase(repo repositories.DatasetRepository) *DatasetUsecase {
 func (du DatasetUsecase) FindAll() ([]*domain.Datasets, error) {
 	return du.Repo.FindAll()
 }
+
+func (du DatasetUsecase) UpdateMarkedByAgent(agent, id int) error {
+	 return du.Repo.UpdateMarkedByAgent(agent, id)
+}

@@ -34,3 +34,22 @@ func TestFindAll(t *testing.T){
 	assert.Len(t, result, 1)
 	assert.Equal(t, "security", result[0].Class)
 }
+
+func TestUpdateMarkedByAgentOne(t *testing.T){
+	db, mock, cleanup := setupMockDB(t)
+
+	defer cleanup()
+
+	repo := repository.NewDatasetRepository(db)
+
+	mock.ExpectBegin()
+	mock.ExpectExec(`UPDATE "datasets" SET "marked_by_agent_one"`).WithArgs(true, 1).WillReturnResult(sqlmock.NewResult(1, 1))
+	mock.ExpectCommit()
+
+	err := repo.UpdateMarkedByAgent(1, 1)
+
+	assert.NoError(t, err)
+
+	err = mock.ExpectationsWereMet()
+	assert.NoError(t, err)
+}

@@ -48,3 +48,17 @@ func (mr *MockDatasetRepositoryMockRecorder) FindAll() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAll", reflect.TypeOf((*MockDatasetRepository)(nil).FindAll))
 }
+
+// UpdateMarkedByAgent mocks base method.
+func (m *MockDatasetRepository) UpdateMarkedByAgent(agent, id int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateMarkedByAgent", agent, id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateMarkedByAgent indicates an expected call of UpdateMarkedByAgent.
+func (mr *MockDatasetRepositoryMockRecorder) UpdateMarkedByAgent(agent, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateMarkedByAgent", reflect.TypeOf((*MockDatasetRepository)(nil).UpdateMarkedByAgent), agent, id)
+}

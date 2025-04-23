@@ -6,4 +6,5 @@ import (
 
 type DatasetRepository interface{
 	FindAll() ([]*domain.Datasets, error)
+	UpdateMarkedByAgent(agent, id int) error
 }
