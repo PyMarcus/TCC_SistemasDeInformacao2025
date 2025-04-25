@@ -19,6 +19,9 @@ import (
 	"gorm.io/gorm"
 )
 
+// execute is the main entry point of the application.
+// It initializes the logger, loads configuration, establishes a database connection,
+// sets up the repositories and use cases, and starts the task processing pool.
 func execute(){
 
 	startTime := time.Now()
@@ -56,6 +59,9 @@ func execute(){
 	loggerUsecase.Error("[+] Complete!", zap.String(constants.ELAPSED_TIME, fmt.Sprintf("%f", elapsedTime)))
 }
 
+// poolExecutor initializes the worker pool and task queue,
+// retrieves all datasets and questions, and dispatches tasks
+// for concurrent processing using a worker pool.
 func poolExecutor(
 		datasetUsecase  *usecase.DatasetUsecase,
 		questionUsecase *usecase.QuestionUsecase,
@@ -101,12 +107,18 @@ func poolExecutor(
 	 
 }
 
+// workerPool listens to the task channel and processes each task
+// concurrently by invoking the insertExecutor function.
+// It is meant to be run as a goroutine.
 func workerPool(tasksCh <-chan *domain.Task, wg *sync.WaitGroup, loggerUsecase *usecase.LoggerUsecase, connDB *gorm.DB, datasetUsecase *usecase.DatasetUsecase, questions []*domain.Question){
 	for task := range tasksCh {
 		insertExecutor(wg, task.Dataset, loggerUsecase, connDB, datasetUsecase, task.Question)
 	}
 }
 
+// insertExecutor handles the processing of a single dataset-question pair.
+// It sends concurrent requests to two agents, handles responses or errors,
+// logs errors, and persists valid results as Atom entities in the database.
 func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUsecase 	*usecase.LoggerUsecase, connDB *gorm.DB, datasetUsecase *usecase.DatasetUsecase, question *domain.Question){
 	
 	errorRepository := repository.NewErrorRepository(connDB)
@@ -116,10 +128,6 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 	atomUsecase := usecase.NewAtomUsecase(atomRepository)
 
 	defer wg.Done()
-
-    // chamar duas goroutines para enviar para Agents diferentes.
-	// refatorar a funcao para fazer apenas a requisicao, ao realizá-la, usar select para 
-	// determinar as respostas prontas e inserir em atom.
 
 	agentOne := make(chan dto.ClientResponseDTO, 1)
 	agentTwo := make(chan dto.ClientResponseDTO, 1)
