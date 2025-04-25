@@ -78,33 +78,32 @@ func poolExecutor(
 	}
 
 	// channel creation
-	tasksCh := make(chan *domain.Datasets, len(dataset))
+	tasksCh := make(chan *domain.Task, len(dataset) * len(questions))
 
 	// workerpool
 	for i := 0; i < constants.WORKERS; i++{
 		go workerPool(tasksCh, &wg, loggerUsecase, connDB, datasetUsecase, questions)
 	}
 
-	for _, row := range dataset{
-		stringDatasetID := fmt.Sprintf("%d", row.ID)
+	// input to channel
+	for _, ds := range dataset {
+		stringDatasetID := fmt.Sprintf("%d", ds.ID)
 		loggerUsecase.Info("[+] Reading dataset ", zap.String(constants.DATASET_ID, stringDatasetID))
-
-		// send task to channel.
-		wg.Add(1)
-		tasksCh <- row
+		for _, q := range questions {
+			wg.Add(1)
+			tasksCh <- &domain.Task{Dataset: ds, Question: q}
+		}
 	}
+
 	wg.Wait()
 
 	close(tasksCh)
 	 
 }
 
-func workerPool(tasksCh <-chan *domain.Datasets, wg *sync.WaitGroup, loggerUsecase *usecase.LoggerUsecase, connDB *gorm.DB, datasetUsecase *usecase.DatasetUsecase, questions []*domain.Question){
-	for _, question := range questions{
-		loggerUsecase.Info("[+] Executing: ", zap.String(constants.QUESTION, question.Question))
-		for row := range tasksCh{
-			insertExecutor(wg, row, loggerUsecase, connDB, datasetUsecase, question)
-		}
+func workerPool(tasksCh <-chan *domain.Task, wg *sync.WaitGroup, loggerUsecase *usecase.LoggerUsecase, connDB *gorm.DB, datasetUsecase *usecase.DatasetUsecase, questions []*domain.Question){
+	for task := range tasksCh {
+		insertExecutor(wg, task.Dataset, loggerUsecase, connDB, datasetUsecase, task.Question)
 	}
 }
 
@@ -115,12 +114,6 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 
 	atomRepository := repository.NewAtomRepository(connDB)
 	atomUsecase := usecase.NewAtomUsecase(atomRepository)
-
-	/*errorRepository := repository.NewErrorRepository(connDB)
-	atomRepository := repository.NewAtomRepository(connDB)
-	
-	errorUsecase := usecase.NewErrorUsecase(errorRepository)
-	atomUsecase := usecase.NewAtomUsecase(atomRepository) */
 
 	defer wg.Done()
 
@@ -214,7 +207,7 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 
 					agentTwo <- responseAgentTwo
 				}else{
-					errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, fmt.Errorf(responseStr), constants.AGENT_TWO, constants.URL_AGENT_TWO, response.Status, agentTwo)
+					errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, fmt.Errorf("erro: %s", responseStr), constants.AGENT_TWO, constants.URL_AGENT_TWO, response.Status, agentTwo)
 					atom.ErrorID = errID
 					return
 				}
@@ -231,6 +224,7 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 
 	timeout := time.After(60 * time.Second)
 
+	// select answers from mult channels
 	for i := 0; i < totalChannels; i++{
 		select{
 		case responseAgentOne := <-agentOne:
