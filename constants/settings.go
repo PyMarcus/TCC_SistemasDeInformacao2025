@@ -18,6 +18,7 @@ const (
 	AGENT_TWO				 string = "AGENT_TWO"
 	URL						 string = "URL"
 	STATUS_CODE_STR			 string = "STATUS_CODE"
+	QUESTION_HEADER 		 string = "Analyze the Java code below, as I will ask you about it later:"
 	REQUEST_TIMEOUT_INTERVAL int    = 2  // min
 	WORKERS					 int 	= 10 // max goroutines, because GEMINI allows 10 requests per min
 )
