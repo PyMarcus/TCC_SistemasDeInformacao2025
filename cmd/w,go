@@ -1,0 +1,78 @@
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+	"sync"
+	"time"
+)
+
+// Simulando nomes vindos do banco
+var nomes = []string{"Alice", "Bob", "Charlie", "Diana", "Eve"}
+
+// Banco de dados simulado (mapa protegido por mutex)
+var banco = make(map[string]string)
+var mu sync.Mutex
+
+// Quantidade de workers
+const numWorkers = 3
+
+// Tarefa que será enviada para os workers
+type Tarefa struct {
+	Nome   string
+	APIURL string
+}
+
+// Função que chama a API
+func processaTarefa(tarefa Tarefa, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	// Faz a requisição (simples GET com o nome como query param)
+	resp, err := http.Get(fmt.Sprintf("%s?nome=%s", tarefa.APIURL, tarefa.Nome))
+	if err != nil {
+		fmt.Printf("Erro ao chamar API para %s: %v\n", tarefa.Nome, err)
+		return
+	}
+	defer resp.Body.Close()
+
+	body, _ := ioutil.ReadAll(resp.Body)
+
+	// Atualiza o "banco de dados"
+	mu.Lock()
+	banco[tarefa.Nome] = string(body)
+	mu.Unlock()
+}
+
+func workerPool(tarefas <-chan Tarefa, wg *sync.WaitGroup) {
+	for tarefa := range tarefas {
+		processaTarefa(tarefa, wg)
+	}
+}
+
+func main() {
+	apiURL := "http://exemplo.com/api" // substitua pela URL real
+
+	tarefas := make(chan Tarefa, len(nomes))
+	var wg sync.WaitGroup
+
+	// Inicia workers
+	for i := 0; i < numWorkers; i++ {
+		go workerPool(tarefas, &wg)
+	}
+
+	// Envia tarefas
+	for _, nome := range nomes {
+		wg.Add(1)
+		tarefas <- Tarefa{Nome: nome, APIURL: apiURL}
+	}
+
+	close(tarefas)
+	wg.Wait()
+
+	// Exibe o banco de dados final
+	fmt.Println("Banco de dados atualizado:")
+	for nome, resposta := range banco {
+		fmt.Printf("%s => %s\n", nome, resposta)
+	}
+}
