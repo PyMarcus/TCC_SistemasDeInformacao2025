@@ -112,6 +112,8 @@ func poolExecutor(
 // It is meant to be run as a goroutine.
 func workerPool(tasksCh <-chan *domain.Task, wg *sync.WaitGroup, loggerUsecase *usecase.LoggerUsecase, connDB *gorm.DB, datasetUsecase *usecase.DatasetUsecase, questions []*domain.Question){
 	for task := range tasksCh {
+		// atention + code + question.
+		task.Question.Question = constants.QUESTION_HEADER + task.Dataset.Class + task.Question.Question
 		insertExecutor(wg, task.Dataset, loggerUsecase, connDB, datasetUsecase, task.Question)
 	}
 }
@@ -121,6 +123,8 @@ func workerPool(tasksCh <-chan *domain.Task, wg *sync.WaitGroup, loggerUsecase *
 // logs errors, and persists valid results as Atom entities in the database.
 func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUsecase 	*usecase.LoggerUsecase, connDB *gorm.DB, datasetUsecase *usecase.DatasetUsecase, question *domain.Question){
 	
+	fmt.Println("#")
+	return
 	errorRepository := repository.NewErrorRepository(connDB)
 	errorUsecase := usecase.NewErrorUsecase(errorRepository)
 
