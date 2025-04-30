@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -19,6 +20,11 @@ import (
 	"gorm.io/gorm"
 )
 
+var (
+	globalCfg *config.Config
+)
+
+
 // execute is the main entry point of the application.
 // It initializes the logger, loads configuration, establishes a database connection,
 // sets up the repositories and use cases, and starts the task processing pool.
@@ -35,9 +41,9 @@ func execute(){
 		loggerUsecase.Error("[-] Fail to load .env", zap.String(constants.ERROR_DESCRIPTION, err.Error()))
 		os.Exit(1)
 	}
+	globalCfg = cfg
 
 	// database conn
-	
 	connDB, err := db.NewPostgresConn(cfg.DatabaseUrl)
 	if err != nil{
 		loggerUsecase.Error("[-] Fail to connect with database ", zap.String(constants.ERROR_DESCRIPTION, err.Error()))
@@ -123,8 +129,6 @@ func workerPool(tasksCh <-chan *domain.Task, wg *sync.WaitGroup, loggerUsecase *
 // logs errors, and persists valid results as Atom entities in the database.
 func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUsecase 	*usecase.LoggerUsecase, connDB *gorm.DB, datasetUsecase *usecase.DatasetUsecase, question *domain.Question){
 	
-	fmt.Println("#")
-	return
 	errorRepository := repository.NewErrorRepository(connDB)
 	errorUsecase := usecase.NewErrorUsecase(errorRepository)
 
@@ -140,10 +144,11 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 	clientService := adapters.NewApiRequestService()
 	clientUsecase := usecase.NewAPIRequestUsecase(clientService)
 
-	headers := map[string]string{"Content-Type": "application/json"}
+
+	QUESTION_ID := 1
 
 	atom := domain.Atom{
-		QuestionID:            int(question.ID),
+		QuestionID:            QUESTION_ID,
 		Question:              question.Question,
 		AgentOneAnswer:        "",
 		AgentTwoAnswer:        "",
@@ -162,12 +167,27 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 	// agent one request
 	if !datasetRow.MarkedByAgentOne{
 		go func(){
-			response, err := clientUsecase.Fetch(constants.URL_AGENT_ONE, headers, "")
+			// gemini
+			urlAgentOne := constants.URL_AGENT_ONE + globalCfg.AGENT_ONE_KEY
+			
+			body, err := agentOneJsonBody(parse(question.Question))
+
+			headers := map[string]string{"Content-Type": "application/json"}
+
+			if err != nil{
+				loggerUsecase.Error("[-] Body from agent one contains error" + err.Error())
+				return
+			}
+			
+			response, err := clientUsecase.Post(urlAgentOne, headers, body)
+			
 			if err != nil{
 				errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, err, constants.AGENT_ONE, constants.URL_AGENT_ONE, response.Status, agentOne)
 				atom.ErrorID = errID
 				return
 			}
+
+			loggerUsecase.Info("[+] Status From agent one: " + response.Status)
 
 			if response.StatusCode == http.StatusOK{
 				datasetRow.MarkedByAgentOne = true
@@ -198,19 +218,29 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 	// agent two request
 	if !datasetRow.MarkedByAgentTwo{
 		go func(){
-			response, err := clientUsecase.Fetch(constants.URL_AGENT_TWO, headers, "")
+			body, err := agentTwoJsonBody(parse(question.Question))
+
+			if err != nil{
+				loggerUsecase.Error("[-] Body from agent one contains error" + err.Error())
+				return
+			}
+			headers := map[string]string{"Content-Type": "application/json"}
+			headers["Authorization"] = "Bearer " + globalCfg.AGENT_TWO_KEY
+
+			response, err := clientUsecase.Post(constants.URL_AGENT_TWO, headers, body)
+
 			if err != nil{
 				errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, err, constants.AGENT_TWO, constants.URL_AGENT_TWO, response.Status, agentTwo)
 				atom.ErrorID = errID
 				return
 			}
-
+			loggerUsecase.Info("[+] Status From agent two: " + response.Status)
 			if response.StatusCode == http.StatusOK{
 				datasetRow.MarkedByAgentTwo = true
 				datasetUsecase.UpdateMarkedByAgent(2, int(datasetRow.ID))
 
 				status, responseStr := usecase.ResponseParser(response)
-
+				
 				if status{
 					responseAgentTwo := dto.ClientResponseDTO{
 						Message: responseStr,
@@ -252,9 +282,65 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 	atom.AgentOneAnswer = responseAgentOneDTO.Message
 	atom.AgentTwoAnswer = responseAgentTwoDTO.Message
 
+	atom.AgentOneIsCorrect = usecase.CheckIfAnswerContainsAtomOfConfusion(atom.AgentOneAnswer)
+	atom.AgentTwoIsCorrect = usecase.CheckIfAnswerContainsAtomOfConfusion(atom.AgentOneAnswer)
+
+	atom.AtomFindedByAgentOne = usecase.CheckWhatAtomOfConfusion(atom.AgentOneAnswer)
+	atom.AtomFindedByAgentTwo = usecase.CheckWhatAtomOfConfusion(atom.AgentTwoAnswer)
+
 	_, err := atomUsecase.Create(&atom)
 	if err != nil{
 		loggerUsecase.Error("[-] Fail to insert ATOM ", zap.String(constants.ERROR_DESCRIPTION, err.Error()))
 		return
 	}
+}
+
+func agentOneJsonBody(content string) (string, error){
+	body := map[string]interface{}{
+		"contents": []map[string]interface{}{
+			{
+				"parts": []map[string]interface{}{
+					{
+						"text": content,
+					},
+				},
+			},
+		},
+	}
+
+	jsonData, err := json.Marshal(body)
+    if err != nil {
+        fmt.Println("Erro ao converter para JSON:", err)
+        return "", err
+    }
+
+	return string(jsonData), nil
+}
+
+func agentTwoJsonBody(content string) (string, error){
+	body := dto.RequestBody{
+		Messages: []dto.Message{
+			{
+				Role:    "user",
+				Content: content,
+			},
+		},
+		Model: constants.MODEL,
+	}
+
+	jsonData, err := json.Marshal(body)
+    if err != nil {
+        fmt.Println("Erro ao converter para JSON:", err)
+        return "", err
+    }
+
+	return string(jsonData), nil
+}
+
+func parse(message string) string{
+	jsonData, err := json.Marshal(message)
+	if err != nil {
+		return err.Error()
+	}
+	return string(jsonData)
 }
