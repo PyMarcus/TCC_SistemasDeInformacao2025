@@ -52,7 +52,12 @@ create-from-dataset:
 run:
 	go run cmd/*.go 
 
-.PHONY: tests
+.PHONY: tests api
 
 tests:
 	go test -v -cover -race ./tests/...
+
+api:
+	python3 -m venv ./api/.venv && \
+	./api/.venv/bin/pip install -r ./api/requirements && \
+	./api/.venv/bin/python ./api/api.py
