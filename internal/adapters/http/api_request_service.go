@@ -59,21 +59,23 @@ func (ars *APIRequestService) Build() (*http.Response, error) {
 	for key, value := range ars.request.Headers {
 		req.Header.Set(key, value)
 	}
-
+	/*
 	client := &http.Client{
 		Timeout: ars.request.Timeout,
-	}
+	}*/
+
+	client := &http.Client{}
 
 	response, err := client.Do(req)
 
 	if err != nil {
-		return nil, fmt.Errorf("error making API request: %v", err)
+		return response, fmt.Errorf("error making API request: %v", err)
 	}
 
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("API request failed with status code %d", response.StatusCode)
+		return response, fmt.Errorf("API request failed with status code %d", response.StatusCode)
 	}
 
 	return response, nil
