@@ -8,6 +8,7 @@ CREATE TABLE "atoms" (
   "atom_finded" varchar,
   "is_correct" bool,
   "failed" bool,
+  "dataset_id" integer,
   "error_id" integer,
   "created_at" timestamp DEFAULT (CURRENT_TIMESTAMP),
   "updated_at" timestamp

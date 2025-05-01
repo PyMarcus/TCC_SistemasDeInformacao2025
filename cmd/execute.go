@@ -3,8 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
+	"regexp"
 	"sync"
 	"time"
 
@@ -20,6 +22,9 @@ import (
 	"gorm.io/gorm"
 )
 
+var (
+	globalConfig *config.Config
+)
 
 
 // execute is the main entry point of the application.
@@ -34,6 +39,8 @@ func execute() {
 	loggerUsecase.Error("[+] Starting...")
 
 	cfg, err := config.LoadConfig(".env")
+	globalConfig = cfg
+
 	if err != nil {
 		loggerUsecase.Error("[-] Fail to load .env", zap.String(constants.ERROR_DESCRIPTION, err.Error()))
 		os.Exit(1)
@@ -113,6 +120,8 @@ func poolExecutor(
 func workerPool(tasksCh <-chan *domain.Task, wg *sync.WaitGroup, loggerUsecase *usecase.LoggerUsecase, connDB *gorm.DB, datasetUsecase *usecase.DatasetUsecase, questions []*domain.Question) {
 	for task := range tasksCh {
 		// atention + code + question.
+		//task.Question.Question = constants.QUESTION_HEADER + removeHeadersOpenAI(task.Dataset.Class) + task.Question.Question
+
 		task.Question.Question = constants.QUESTION_HEADER + task.Dataset.Class + task.Question.Question
 		insertExecutor(wg, task.Dataset, loggerUsecase, connDB, datasetUsecase, task.Question)
 	}
@@ -122,7 +131,8 @@ func workerPool(tasksCh <-chan *domain.Task, wg *sync.WaitGroup, loggerUsecase *
 // It sends concurrent requests to two agents, handles responses or errors,
 // logs errors, and persists valid results as Atom entities in the database.
 func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUsecase *usecase.LoggerUsecase, connDB *gorm.DB, datasetUsecase *usecase.DatasetUsecase, question *domain.Question) {
-
+	
+	log.Printf("Request: %d\n", datasetRow.ID)
 	errorRepository := repository.NewErrorRepository(connDB)
 	errorUsecase := usecase.NewErrorUsecase(errorRepository)
 
@@ -156,8 +166,8 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 		// Question One
 		if !datasetRow.MarkedByAgentOne {
 			go func() {
-				urlAgentOne := constants.URL_AGENT_ONE
-
+				urlAgentOne := constants.URL_AGENT_TWO + globalConfig.GEMINI_KEY
+				
 				body, err := jsonBody(parse(question.Question))
 
 				headers := map[string]string{"Content-Type": "application/json"}
@@ -166,32 +176,31 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 					loggerUsecase.Error("[-] Body from question one contains error" + err.Error())
 					return
 				}
-
+				
 				response, err := clientUsecase.Post(urlAgentOne, headers, body)
 
 				if err != nil {
+					log.Println("Error in question one " + err.Error())
 					errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, err, constants.AGENT_ONE, constants.URL_AGENT_ONE, response.Status, questionOne)
 					atom.ErrorID = errID
 					return
 				}
+				
+				defer response.Body.Close()
 
 				loggerUsecase.Info("[+] Status From question one: " + response.Status)
 
 				if response.StatusCode == http.StatusOK {
-					datasetRow.MarkedByAgentOne = true
-					datasetUsecase.UpdateMarkedByAgent(1, int(datasetRow.ID))
-
-					status, responseStr := usecase.ResponseParser(response)
+					
+					status, responseDto := usecase.ResponseParser(response)
 
 					if status {
-						responseAgentOne := dto.ClientResponseDTO{
-							Message: responseStr,
-							Api:     constants.AGENT_ONE,
-						}
+						responseAgentOne := responseDto
 
 						questionOne <- responseAgentOne
 					} else {
-						errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, fmt.Errorf("[-] Status Not ok :%s", responseStr), constants.AGENT_ONE, constants.URL_AGENT_ONE, response.Status, questionOne)
+						log.Println("Error in question one status " + response.Status)
+						errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, fmt.Errorf("[-] Status Not ok :%s", responseDto.Candidates[0].Content.Parts[0].Text), constants.AGENT_ONE, constants.URL_AGENT_ONE, response.Status, questionOne)
 						atom.ErrorID = errID
 						return
 					}
@@ -213,29 +222,29 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 				}
 				headers := map[string]string{"Content-Type": "application/json"}
 
-				response, err := clientUsecase.Post(constants.URL_AGENT_TWO, headers, body)
+				urlStr := constants.URL_AGENT_TWO + globalConfig.GEMINI_KEY
+				response, err := clientUsecase.Post(urlStr, headers, body)
 
 				if err != nil {
+					log.Println("Error in question two " + err.Error())
 					errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, err, constants.AGENT_TWO, constants.URL_AGENT_TWO, response.Status, questionTwo)
 					atom.ErrorID = errID
 					return
 				}
-				loggerUsecase.Info("[+] Status From question two: " + response.Status)
-				if response.StatusCode == http.StatusOK {
-					datasetRow.MarkedByAgentTwo = true
-					datasetUsecase.UpdateMarkedByAgent(2, int(datasetRow.ID))
 
-					status, responseStr := usecase.ResponseParser(response)
+				defer response.Body.Close()
+
+				loggerUsecase.Info("[+] Status From question two: " + response.Status)
+
+				if response.StatusCode == http.StatusOK {
+					
+					status, responseDto := usecase.ResponseParser(response)
 
 					if status {
-						responseAgentTwo := dto.ClientResponseDTO{
-							Message: responseStr,
-							Api:     constants.AGENT_TWO,
-						}
-
+						responseAgentTwo := responseDto
 						questionTwo <- responseAgentTwo
 					} else {
-						errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, fmt.Errorf("erro: %s", responseStr), constants.AGENT_TWO, constants.URL_AGENT_TWO, response.Status, questionTwo)
+						errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, fmt.Errorf("erro: %s", responseDto.Candidates[0].Content.Parts[0].Text), constants.AGENT_TWO, constants.URL_AGENT_TWO, response.Status, questionTwo)
 						atom.ErrorID = errID
 						return
 					}
@@ -248,6 +257,7 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 		}
 	}
 
+
 	var responseQuestionOneDTO dto.ClientResponseDTO
 	var responseQuestionTwoDTO dto.ClientResponseDTO
 
@@ -258,25 +268,35 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 		select {
 		case responseQuestionOne := <-questionOne:
 			responseQuestionOneDTO = responseQuestionOne
-			atom.Answer = responseQuestionOneDTO.Message
+			atom.Answer = responseQuestionOneDTO.Candidates[0].Content.Parts[0].Text
 			atom.IsCorrect = usecase.CheckIfAnswerContainsAtomOfConfusion(atom.Answer)
 			atom.AtomFinded = usecase.CheckWhatAtomOfConfusion(atom.Answer)
 
 			_, err := atomUsecase.Create(&atom)
 			if err != nil {
 				loggerUsecase.Error("[-] Fail to insert ATOM ", zap.String(constants.ERROR_DESCRIPTION, err.Error()))
+				return
 			}
+
+			datasetRow.MarkedByAgentTwo = true
+			datasetUsecase.UpdateMarkedByAgent(1, int(datasetRow.ID))
+
 		case responseQuestionTwo := <-questionTwo:
 			responseQuestionTwoDTO = responseQuestionTwo
-			atom.Answer = responseQuestionTwoDTO.Message
+			atom.Answer = responseQuestionTwoDTO.Candidates[0].Content.Parts[0].Text
 			atom.IsCorrect = usecase.CheckIfAnswerContainsAtomOfConfusion(atom.Answer)
 			atom.AtomFinded = usecase.CheckWhatAtomOfConfusion(atom.Answer)
 
 			_, err := atomUsecase.Create(&atom)
 			if err != nil {
 				loggerUsecase.Error("[-] Fail to insert ATOM ", zap.String(constants.ERROR_DESCRIPTION, err.Error()))
+				return
 			}
+			datasetRow.MarkedByAgentTwo = true
+			datasetUsecase.UpdateMarkedByAgent(2, int(datasetRow.ID))
+
 		case <-timeout:
+			log.Println("Timeout")
 			loggerUsecase.Error("API Timeout")
 			return
 		}
@@ -286,15 +306,15 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 
 func jsonBody(content string) (string, error) {
 	body := dto.RequestBody{
-		Messages: []dto.Message{
+		Contents: []dto.Content{
 			{
-				Role:    "user",
-				Content: content,
+				Parts: []dto.Part{
+					{
+						Text: content,
+					},
+				},
 			},
 		},
-		Model:       constants.MODEL,
-		Temperature: constants.TEMPERATURE,
-		Stream:      constants.STREAM,
 	}
 
 	jsonData, err := json.Marshal(body)
@@ -312,4 +332,16 @@ func parse(message string) string {
 		return err.Error()
 	}
 	return string(jsonData)
+}
+
+func removeHeadersOpenAI(code string) string {
+	// Remove comments
+	code = regexp.MustCompile(constants.SINGLE_COMMENTS).ReplaceAllString(code, "")
+	// Remove m comments
+	code = regexp.MustCompile(constants.MULTI_COMMENTS).ReplaceAllString(code, "")
+	// Remove imports
+	code = regexp.MustCompile(constants.IMPORTS).ReplaceAllString(code, "")
+	// Remove (package)
+	code = regexp.MustCompile(constants.HEADERS).ReplaceAllString(code, "")
+	return code
 }

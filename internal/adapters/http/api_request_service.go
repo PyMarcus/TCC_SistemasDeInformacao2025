@@ -3,6 +3,7 @@ package adapters
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 
@@ -72,10 +73,12 @@ func (ars *APIRequestService) Build() (*http.Response, error) {
 		return response, fmt.Errorf("error making API request: %v", err)
 	}
 
-	defer response.Body.Close()
-
 	if response.StatusCode != http.StatusOK {
-		return response, fmt.Errorf("API request failed with status code %d", response.StatusCode)
+		resp, err  := io.ReadAll(response.Body)
+		if err != nil {
+			return response, fmt.Errorf("error to read body after status code not 200: %v", err)
+		}
+		return response, fmt.Errorf("API request failed with status code %d and response: %s", response.StatusCode, string(resp))
 	}
 
 	return response, nil

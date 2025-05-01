@@ -32,10 +32,22 @@ func HandleAgentError(
 			zap.String(constants.ERROR_DESCRIPTION, dbErr.Error()),
 		)
 	}
-	agentChan <- dto.ClientResponseDTO{
-		Message: err.Error(),
-		Api: apiName,
+	response := dto.ClientResponseDTO{
+		Candidates: []dto.Candidate{
+			{
+				Content: dto.Content{
+					Parts: []dto.Part{
+						{
+							Text: err.Error(),
+						},
+					},
+				},
+			},
+		},
 	}
+	agentChan <- response
+		
+	
 
 	return int(id)
 }
