@@ -12,7 +12,7 @@ import (
 type Config struct{
 	DatabaseUrl string 
 	AGENT_ONE_KEY string 
-	AGENT_TWO_KEY string
+	GEMINI_KEY string
 }
 
 // LoadConfig: loads database and api settings from .env file
@@ -37,23 +37,16 @@ func LoadConfig(dotenvFilePath string) (*Config, error){
 		return nil, errors.New("DatabaseUrl is missing")
 	}
 
-	agentOne := os.Getenv("GEMINI_KEY")
 
-	if agentOne == ""{
-		log.Println("Database url is required")
-		return nil, errors.New("DatabaseUrl is missing")
-	}
+	key := os.Getenv("GEMINI_KEY")
 
-	agentTwo := os.Getenv("DEEPSEEK_KEY")
-
-	if agentTwo == ""{
-		log.Println("Database url is required")
-		return nil, errors.New("DatabaseUrl is missing")
+	if key == ""{
+		log.Println("GEMINI key url is required")
+		return nil, errors.New("GEMINI key is missing")
 	}
 
 	return &Config{
 		DatabaseUrl: dbUrl,
-		AGENT_ONE_KEY: agentOne,
-		AGENT_TWO_KEY: agentTwo,
+		GEMINI_KEY: key,
 	}, nil
 }
