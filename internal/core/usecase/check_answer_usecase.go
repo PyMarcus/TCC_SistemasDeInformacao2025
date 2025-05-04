@@ -22,13 +22,15 @@ var (
 )
 
 
-func CheckIfAnswerContainsAtomOfConfusion(answer string) bool{
+func CheckIfAnswerContainsAtomOfConfusion(answer string, searched string) bool{
 	answersForm := strings.ToLower(answer)
 
 	if strings.Contains(answersForm, "yes"){
 		for _, atom := range atoms{
 			if strings.Contains(answersForm, atom){
-				return true
+				if strings.Contains(answersForm, strings.ToLower(searched)){
+					return true
+				}
 			}
 		}
 	}
