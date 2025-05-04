@@ -7,7 +7,7 @@ type Atom struct {
 	QuestionID           int    `gorm:"column:question_id"`
 	Question             string `gorm:"type:text"`
 	Answer       		 string `gorm:"type:text"`
-	DatasetID            int    `gorm:"column:dataset_id"`
+	DatasetID            int    `gorm:"column:datasets_id"`
 	AtomSearched         string `gorm:"column:atom_searched"`
 	AtomFinded			 string `gorm:"column:atom_finded"`
 	IsCorrect    		 bool   `gorm:"column:is_correct"`

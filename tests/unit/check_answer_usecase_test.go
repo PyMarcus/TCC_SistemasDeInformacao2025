@@ -28,10 +28,16 @@ func createTestCasesToCheckAnswer() []*testCaseCheckAnswer{
 }
 
 func TestCheckIfAnswerContainsAtomOfConfusion(t *testing.T) {
-	for _, test := range createTestCasesToCheckAnswer(){
-		result := usecase.CheckIfAnswerContainsAtomOfConfusion(test.answer)
-		assert.Equal(t, result, test.validAnswer)
-	}
+	
+	result := usecase.CheckIfAnswerContainsAtomOfConfusion("Yes.Conditional Operator,repurposed variables", "repurposed variables")
+	assert.True(t, result)
+
+	result = usecase.CheckIfAnswerContainsAtomOfConfusion("Yes.Conditional Operator,repurposed variables", "doxing")
+	assert.False(t, result)
+
+	result = usecase.CheckIfAnswerContainsAtomOfConfusion("Yes. Type Conversion, Constant Variables.", "Type Conversion")
+	assert.True(t, result)
+	
 }
 
 func TestCheckWhatAtomOfConfusion(t *testing.T) {
