@@ -8,7 +8,8 @@ Este projeto é parte de uma pesquisa científica que busca comparar agentes de 
 
 ## 🚀 Tecnologias Utilizadas
 
-![ChatGPT Image 7 de mai  de 2025, 15_54_10](https://github.com/user-attachments/assets/36d49217-b34a-430e-84ff-99bbf29bc6d4)
+![ChatGPT Image 7 de mai  de 2025, 15_54_10(1)](https://github.com/user-attachments/assets/6e0fca87-3143-4726-897d-09b857823e9b)
+
 
 ---
 
