@@ -13,6 +13,7 @@ Este projeto é parte de uma pesquisa científica que busca comparar agentes de 
 - **Golang Migrate** (migrations do banco)
 - **Golangci-lint** (linter)
 - **Mockgen** (geração de mocks para testes)
+- **Gemini API** (integração com inteligência artificial do **GOOGLE** para identificação de atoms of confusion)
 - Estruturado com:
   - **Clean Architecture**
   - Princípios **SOLID**
