@@ -19,7 +19,7 @@ func NewDatasetRepository(db *gorm.DB) repositories.DatasetRepository {
 func (dr *DatasetRepository) FindAll() ([]*domain.Datasets, error) {
 	var dataset []*domain.Datasets
 
-	if err := dr.db.Where("status_code = ?", "200 OK").Find(&dataset).Error; err != nil {
+	if err := dr.db.Where("status_code = ?", "200 OK").Order("id DESC").Find(&dataset).Error; err != nil {
 		return nil, err
 	}
 	return dataset, nil

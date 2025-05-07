@@ -306,7 +306,7 @@ func questionOneFn(
 
 		if response.StatusCode == http.StatusOK {
 
-			status, responseDto := usecase.ResponseParser(response, loggerUsecase, 1)
+			status, responseDto := usecase.ResponseParser(response, loggerUsecase, 1, atom)
 
 			if status {
 				responseAgentOne := responseDto
@@ -333,6 +333,7 @@ func questionOneFn(
 
 		} else {
 			color.Red("Not OK! Status: " + response.Status)
+			loggerUsecase.Error(body)
 			errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, fmt.Errorf("[-] Fail to get success in request of question one"), constants.AGENT_ONE, constants.URL_AGENT_ONE, response.Status, questionOne)
 			atom.ErrorID = errID
 			return
@@ -393,7 +394,7 @@ func questionTwoFn(
 
 		if response.StatusCode == http.StatusOK {
 
-			status, responseDto := usecase.ResponseParser(response, loggerUsecase, 2)
+			status, responseDto := usecase.ResponseParser(response, loggerUsecase, 2, atom)
 	
 			if status {
 				responseAgentTwo := responseDto
@@ -414,6 +415,7 @@ func questionTwoFn(
 			time.Sleep(retryInterval)
 			retryInterval *= 4 
 		}else {
+			loggerUsecase.Error(body)
 			log.Printf("[-] Error status %s", response.Status)
 			errID := usecase.HandleAgentError(loggerUsecase, errorUsecase, fmt.Errorf("[-] Fail to get success in request of question two"), constants.AGENT_TWO, constants.URL_AGENT_TWO, response.Status, questionTwo)
 			atom.ErrorID = errID
@@ -425,7 +427,11 @@ func questionTwoFn(
 func handleResponse(response dto.ClientResponseDTO, atom *domain.Atom, datasetRow *domain.Datasets, atomUsecase *usecase.AtomUsecase, datasetUsecase *usecase.DatasetUsecase, agent int, loggerUsecase *usecase.LoggerUsecase) {
 	atom.Answer = response.Candidates[0].Content.Parts[0].Text
 	atom.IsCorrect = usecase.CheckIfAnswerContainsAtomOfConfusion(atom.Answer, atom.AtomSearched)
-	atom.AtomFinded = usecase.CheckWhatAtomOfConfusion(atom.Answer)
+	/*if atom.AtomFinded == ""{
+		atom.AtomFinded = usecase.CheckWhatAtomOfConfusion(atom.Answer)
+	}else{
+		atom.AtomFinded = usecase.CheckWhatAtomOfConfusion(atom.AtomFinded)
+	}*/
 	if atom.Answer != "" && strings.Contains(strings.ToLower(atom.Answer), "yes"){
 		_, err := atomUsecase.Create(atom)
 		if err != nil {
