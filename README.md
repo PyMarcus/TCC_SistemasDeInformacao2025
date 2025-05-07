@@ -31,6 +31,7 @@ Este projeto é parte de uma pesquisa científica que busca comparar agentes de 
     │ ├── repository/
     ├── core/
     │ ├── domain/
+    │ ├── ports/
     │ ├── usecase/
     scripts/
     cmd/
