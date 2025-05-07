@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-
+ 
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/constants"
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/adapters/config"
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/adapters/db"
