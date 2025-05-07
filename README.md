@@ -8,20 +8,10 @@ Este projeto é parte de uma pesquisa científica que busca comparar agentes de 
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Golang (Go)**
-- **PostgreSQL**
-- **Golang Migrate** (migrations do banco)
-- **Golangci-lint** (linter)
-- **Mockgen** (geração de mocks para testes)
-- **Gemini API** (integração com inteligência artificial do **GOOGLE** para identificação de atoms of confusion)
-- Estruturado com:
-  - **Clean Architecture**
-  - Princípios **SOLID**
-  - Padrão **Repository**
-  - Uso de **worker pool** para execução concorrente
-  - Logger estruturado com **Zap**
+![ChatGPT Image 7 de mai  de 2025, 15_54_10](https://github.com/user-attachments/assets/36d49217-b34a-430e-84ff-99bbf29bc6d4)
 
 ---
+
 
 ## 📦 Estrutura do Projeto
     internal/
