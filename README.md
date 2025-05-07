@@ -1,41 +1,152 @@
-![act-logo](https://raw.githubusercontent.com/wiki/nektos/act/img/logo-150.png)
+# 🔬 TCC Sistemas de Informação 2025 - Detecção de Átomos de Confusão com AI
 
-# Overview [![push](https://github.com/nektos/act/workflows/push/badge.svg?branch=master&event=push)](https://github.com/nektos/act/actions) [![Join the chat at https://gitter.im/nektos/act](https://badges.gitter.im/nektos/act.svg)](https://gitter.im/nektos/act?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Go Report Card](https://goreportcard.com/badge/github.com/nektos/act)](https://goreportcard.com/report/github.com/nektos/act) [![awesome-runners](https://img.shields.io/badge/listed%20on-awesome--runners-blue.svg)](https://github.com/jonico/awesome-runners)
+Este projeto é parte de uma pesquisa científica que busca comparar agentes de IA (como o **Gemini AI**) na tarefa de identificar **átomos de confusão** — elementos mínimos de código que induzem a erros de entendimento — no contexto da **Engenharia de Software**.
 
-> "Think globally, `act` locally"
+> 🧩 Baseado nos princípios de **Clean Architecture** e **SOLID**, com tecnologias modernas como **Go**, **PostgreSQL**, e ferramentas de migração e linting.
 
-Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
+---
 
-- **Fast Feedback** - Rather than having to commit/push every time you want to test out the changes you are making to your `.github/workflows/` files (or for any changes to embedded GitHub actions), you can use `act` to run the actions locally. The [environment variables](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables) and [filesystem](https://help.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners#filesystems-on-github-hosted-runners) are all configured to match what GitHub provides.
-- **Local Task Runner** - I love [make](<https://en.wikipedia.org/wiki/Make_(software)>). However, I also hate repeating myself. With `act`, you can use the GitHub Actions defined in your `.github/workflows/` to replace your `Makefile`!
+## 🚀 Tecnologias Utilizadas
 
-> [!TIP]
-> **Now Manage and Run Act Directly From VS Code!**<br/>
-> Check out the [GitHub Local Actions](https://sanjulaganepola.github.io/github-local-actions-docs/) Visual Studio Code extension which allows you to leverage the power of `act` to run and test workflows locally without leaving your editor.
+- **Golang (Go)**
+- **PostgreSQL**
+- **Golang Migrate** (migrations do banco)
+- **Golangci-lint** (linter)
+- **Mockgen** (geração de mocks para testes)
+- Estruturado com:
+  - **Clean Architecture**
+  - Princípios **SOLID**
+  - Padrão **Repository**
+  - Uso de **worker pool** para execução concorrente
+  - Logger estruturado com **Zap**
 
-# How Does It Work?
+---
 
-When you run `act` it reads in your GitHub Actions from `.github/workflows/` and determines the set of actions that need to be run. It uses the Docker API to either pull or build the necessary images, as defined in your workflow files and finally determines the execution path based on the dependencies that were defined. Once it has the execution path, it then uses the Docker API to run containers for each action based on the images prepared earlier. The [environment variables](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables) and [filesystem](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#file-systems) are all configured to match what GitHub provides.
+## 📦 Estrutura do Projeto
+    internal/
+    ├── adapters/
+    │ ├── config/
+    │ ├── db/
+    │ ├── http/
+    │ ├── repository/
+    ├── core/
+    │ ├── domain/
+    │ ├── usecase/
+    scripts/
+    cmd/
+    database/
+    tests/
 
-Let's see it in action with a [sample repo](https://github.com/cplee/github-actions-demo)!
+## ⚙️ Como Executar o Projeto
 
-![Demo](https://raw.githubusercontent.com/wiki/nektos/act/quickstart/act-quickstart-2.gif)
+### 1. Clone o projeto
+```bash
+git clone https://github.com/PyMarcus/TCC_SistemasDeInformacao2025.git
+cd TCC_SistemasDeInformacao2025
+```
 
-# Act User Guide
+### 2. Configure o banco de dados
 
-Please look at the [act user guide](https://nektosact.com) for more documentation.
+Edite o arquivo .env com suas credenciais:
 
-# Support
+    DATABASE_URL=postgres://marcus:marcus123@localhost:5432/marcus_db?sslmode=disable
 
-Need help? Ask on [Gitter](https://gitter.im/nektos/act)!
+## 📂 Comandos Úteis (via Makefile)
 
-# Contributing
+Criar uma nova migration
+```bash
+make create-migrations NAME=nome_da_migration
+```
+Rodar migrações
+```bash
+make migrate-up
+```
+Resetar e subir do zero
+```bash
+make migrate-reset
+```
 
-Want to contribute to act? Awesome! Check out the [contributing guidelines](CONTRIBUTING.md) to get involved.
+## 🐳 Ferramentas
 
-## Manually building from source
+Instalar migrate
+```bash
+make migrate-download
+```
 
-- Install Go tools 1.20+ - (<https://golang.org/doc/install>)
-- Clone this repo `git clone git@github.com:nektos/act.git`
-- Run unit tests with `make test`
-- Build and install: `make install`
+Instalar mockgen
+```bash
+make mockgen-download
+```
+
+## ⚡ Executar o Sistema
+```bash
+make run
+```
+
+🛠️ Principais Padrões Usados
+
+* Clean Architecture: separação clara entre camadas domain, usecase, adapters.
+    
+* SOLID: cada módulo com responsabilidade única, injeção de dependências e interfaces.
+    
+* Worker Pool: executa múltiplas tarefas simultaneamente de forma segura usando goroutines.
+    
+* Configuração via .env usando loader customizado.
+    
+* Logger estruturado usando zap.
+
+* Implementa um controle de pausa global com sincronização usando mutex e condições (sync.Cond) para coordenar a execução concorrente das goroutines.
+
+## 🎯 Objetivo da Pesquisa
+
+Este sistema executa a análise de datasets contendo código-fonte java e perguntas relacionadas, criadas a partir de prompt engineering, com objetivo de:
+
+* Identificar pontos de confusão no código.
+* Avaliar respostas geradas por modelos AI (ex: Gemini).
+* Gerar relatórios para análise científica e estatística.
+
+## 👨‍🔬 Autor
+
+Marcus (PyMarcus)
+Graduando em Sistemas de Informação - 2025
+Este projeto faz parte do Trabalho de Conclusão de Curso (TCC) em Engenharia de Software.
+
+## 🐘 Banco de Dados
+
+* PostgreSQL
+
+* Gerenciado com golang-migrate
+
+* Dados versionados via migrações SQL
+
+## 🧹 Linting & Testes
+
+* Linting via golangci-lint
+
+* Testes com go test, incluindo:
+
+        Verificação de race conditions
+
+        Cobertura de código
+
+        Mocks com mockgen
+
+## 📊 Logs e Métricas
+
+* Logs estruturados via zap.
+
+* Métricas de tempo de execução exibidas no final de cada pool executado.
+
+## 🏁 Requisitos
+
+* Go 1.20+
+
+* PostgreSQL 13+
+
+* Ferramentas:
+
+        migrate
+
+        golangci-lint
+
+        mockgen
