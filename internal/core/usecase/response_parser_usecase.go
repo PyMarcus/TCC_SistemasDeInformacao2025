@@ -9,9 +9,10 @@ import (
 
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/constants"
 	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/adapters/http/dto"
+	"github.com/PyMarcus/TCC_SistemasDeInformacao2025/internal/core/domain"
 )
 
-func ResponseParser(response *http.Response, logUsecase *LoggerUsecase, question int) (bool, dto.ClientResponseDTO){
+func ResponseParser(response *http.Response, logUsecase *LoggerUsecase, question int, atom *domain.Atom) (bool, dto.ClientResponseDTO){
 	var responseDTO dto.ClientResponseDTO
 
 	err := json.NewDecoder(response.Body).Decode(&responseDTO)
@@ -21,13 +22,15 @@ func ResponseParser(response *http.Response, logUsecase *LoggerUsecase, question
 	}
 	text := responseDTO.Candidates[0].Content.Parts[0].Text
 	logUsecase.Info("[+] RESPONSE OK: " + text)
+	responseDTO.Candidates[0].Content.Parts[0].Text = text
+
 	if question == 1{
 		responseRe := regexp.MustCompile(constants.ANSWER)
 		results := responseRe.FindAllString(text, -1)
 		concat := strings.Join(results, " ")
-		responseDTO.Candidates[0].Content.Parts[0].Text = concat
+		atom.AtomFinded = concat
 	}else{
-		responseDTO.Candidates[0].Content.Parts[0].Text = text
+		atom.AtomFinded = text
 	}
 
 	return true, responseDTO
