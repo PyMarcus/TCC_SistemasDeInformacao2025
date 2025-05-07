@@ -21,7 +21,7 @@ const (
 	STATUS_CODE_STR			 string = "STATUS_CODE"
 	QUESTION_HEADER 		 string = "Analyze the Java code below, as I will ask you about it later:"
 	REQUEST_TIMEOUT_INTERVAL int    = 120  // 2min 
-	WORKERS					 int 	= 1 // max goroutines, because i'm using gemini 3rpm.
+	WORKERS					 int 	= 10 // max goroutines.
 	QUESTION_ONE_NUMBER		 int    = 1
 	MAX_RETRIES				 int    = 5
 	TEMPERATURE				 float32 = 0.7

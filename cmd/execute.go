@@ -160,7 +160,7 @@ func workerPool(tasksCh <-chan *domain.Task, wg *sync.WaitGroup, loggerUsecase *
 		globalPause.mutex.Unlock()
 
 
-		task.Question.Question = constants.QUESTION_HEADER + task.Dataset.Class + task.Question.Question
+		task.Question.Question = constants.QUESTION_HEADER + removeHeadersOpenAI(task.Dataset.Class) + task.Question.Question
 		insertExecutor(wg, task.Dataset, loggerUsecase, connDB, datasetUsecase, task.Question)
 	}
 }
@@ -205,12 +205,12 @@ func insertExecutor(wg *sync.WaitGroup, datasetRow *domain.Datasets, loggerUseca
 
 	if int(question.ID) == constants.QUESTION_ONE_NUMBER && !datasetRow.MarkedByAgentOne {
 		activeChannels++
-		go questionOneFn(question,loggerUsecase,  &atom, clientUsecase, errorUsecase,questionOne)
+		go questionOneFn(question,loggerUsecase,  &atom, clientUsecase, errorUsecase, questionOne)
 		
 	} 
 	if int(question.ID) != constants.QUESTION_ONE_NUMBER && !datasetRow.MarkedByAgentTwo {
 		activeChannels++
-		go questionTwoFn(question,loggerUsecase,  &atom, clientUsecase, errorUsecase,questionTwo)
+		go questionTwoFn(question,loggerUsecase,  &atom, clientUsecase, errorUsecase, questionTwo)
 	}
 
 	timeout := time.After(time.Duration(constants.REQUEST_TIMEOUT_INTERVAL) * time.Second)
@@ -273,6 +273,7 @@ func removeHeadersOpenAI(code string) string {
 	code = regexp.MustCompile(constants.IMPORTS).ReplaceAllString(code, "")
 	// Remove (package)
 	code = regexp.MustCompile(constants.HEADERS).ReplaceAllString(code, "")
+	code = strings.ReplaceAll(code, "\"", "")
 	return code
 }
 
@@ -432,7 +433,8 @@ func handleResponse(response dto.ClientResponseDTO, atom *domain.Atom, datasetRo
 	}else{
 		atom.AtomFinded = usecase.CheckWhatAtomOfConfusion(atom.AtomFinded)
 	}*/
-	if atom.Answer != "" && strings.Contains(strings.ToLower(atom.Answer), "yes"){
+	
+	if (atom.Answer != "" && strings.Contains(strings.ToLower(atom.Answer), "yes") ) || strings.Contains(strings.ToLower(atom.Answer), "no"){
 		_, err := atomUsecase.Create(atom)
 		if err != nil {
 			color.Red("[-] Fail to insert ATOM " + err.Error())
@@ -446,7 +448,7 @@ func handleResponse(response dto.ClientResponseDTO, atom *domain.Atom, datasetRo
 		}
 		datasetUsecase.UpdateMarkedByAgent(agent, int(datasetRow.ID))
 	}else{
-		loggerUsecase.Error("EMPTY ANSWER? " + response.Candidates[0].Content.Parts[0].Text)
-		color.Yellow(fmt.Sprintf("Answer for question: %d is empty", agent))
+		loggerUsecase.Error("EMPTY ANSWER? " + response.Candidates[0].Content.Parts[0].Text + " ROW: " + fmt.Sprint(datasetRow.ID))
+		color.Yellow(fmt.Sprintf("Answer for question: %d is empty dataset: %d", agent, datasetRow.ID))
 	}
 }
